@@ -1,0 +1,41 @@
+{
+  "name": "OBV Typography",
+  "description": "Typography system for Open Box Ventures LLP (OBV)",
+  "roles": {
+    "display": {
+      "fontFamily": "Anton",
+      "fallback": "sans-serif",
+      "weight": 400,
+      "textTransform": "uppercase",
+      "usage": "Headlines / section titles",
+      "scale": {
+        "xl": "clamp(44px, 8vw, 96px)",
+        "lg": "clamp(30px, 5vw, 52px)",
+        "md": "28px"
+      }
+    },
+    "body": {
+      "fontFamily": "Inter",
+      "fallback": "sans-serif",
+      "weights": [400, 500, 600, 700],
+      "usage": "Paragraphs / general copy",
+      "scale": {
+        "lg": "19px",
+        "base": "16px",
+        "sm": "14px"
+      }
+    },
+    "utility": {
+      "fontFamily": "IBM Plex Mono",
+      "fallback": "monospace",
+      "weights": [400, 500, 600],
+      "usage": "Labels, tags, data, timestamps",
+      "scale": {
+        "lg": "16px",
+        "base": "13px",
+        "sm": "12px",
+        "xs": "11px"
+      }
+    }
+  }
+}

@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Open Box Ventures (OBV) theme — see theme.json. Two colors only: every
+     other tone below is an opacity mix of these two. */
+  --color-ink: #0a0a0a; /* Background */
+  --color-paper: #edeae1; /* text / foreground */
+  --color-line: rgba(237, 234, 225, 0.14);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-line: var(--color-line);
+
+  /* Typography roles — see typography.json */
+  --font-display: var(--font-anton);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-ibm-plex-mono);
+
+  --text-display-xl: clamp(44px, 8vw, 96px);
+  --text-display-lg: clamp(30px, 5vw, 52px);
+  --text-display-md: 28px;
+
+  --text-body-lg: 19px;
+  --text-body-base: 16px;
+  --text-body-sm: 14px;
+
+  --text-utility-lg: 16px;
+  --text-utility-base: 13px;
+  --text-utility-sm: 12px;
+  --text-utility-xs: 11px;
+
+  /* near-sharp corners for stage/panel treatments — deliberately not the
+     rounded-2xl used on card grids elsewhere */
+  --radius-panel: 4px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-body-base);
+}
+
+::selection {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* form controls don't inherit sizing from utility classes reliably across
+   browsers — pin height/resize here as the single source of truth so no
+   field can silently balloon to its UA default (esp. on focus/validation) */
+input,
+select {
+  height: 3.5rem;
+  box-sizing: border-box;
+}
+textarea {
+  resize: none;
+  box-sizing: border-box;
+}
+input,
+textarea,
+select {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
 }

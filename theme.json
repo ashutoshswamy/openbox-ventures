@@ -1,0 +1,14 @@
+{
+  "name": "OBV Color Theme",
+  "description": "Two-color palette derived from the Open Box Ventures (OBV) logo",
+  "colors": {
+    "ink": {
+      "hex": "#0A0A0A",
+      "role": "Background"
+    },
+    "paper": {
+      "hex": "#EDEAE1",
+      "role": "Text / foreground"
+    }
+  }
+}
