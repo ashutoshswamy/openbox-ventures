@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SocialIcon } from "react-social-icons";
-import { services, offices, company } from "@/lib/data";
+import { services, company } from "@/lib/data";
+import { Offices } from "./Offices";
 
 const socials = [
   { network: "linkedin", url: "https://in.linkedin.com/company/open-box-ventures-llp" },
@@ -60,15 +61,9 @@ export function Footer() {
 
         <div className="mt-12 border-t border-line pt-8">
           <p className={labelClass}>Offices</p>
-          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-body-sm text-paper/60 sm:grid-cols-3 lg:grid-cols-6">
-            {offices.map((o) => (
-              <li key={o.city}>
-                <span className="text-paper/80">{o.city}</span>
-                <br />
-                {o.region}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-8">
+            <Offices />
+          </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-6 border-t border-line pt-8 text-body-sm text-paper/55 md:flex-row md:items-center md:justify-between">

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { CTA } from "@/components/CTA";
-import { ScrollReveal, StaggerChild, StaggerGroup } from "@/components/ScrollReveal";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollHeadline } from "@/components/ScrollHeadline";
-import { company, offices, differentiators } from "@/lib/data";
+import { Offices } from "@/components/Offices";
+import { company, differentiators } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
@@ -30,17 +31,9 @@ export default function AboutPage() {
           <ScrollHeadline className="max-w-2xl font-display text-display-lg leading-tight">
             Where we work
           </ScrollHeadline>
-          <StaggerGroup className="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {offices.map((o) => (
-              <StaggerChild key={o.city} className="border-t border-line pt-6">
-                <p className="font-display text-display-md">{o.city}</p>
-                <p className="mt-1 text-body-sm text-paper/60">{o.region}</p>
-                {"role" in o && (
-                  <p className="mt-2 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/45">{o.role}</p>
-                )}
-              </StaggerChild>
-            ))}
-          </StaggerGroup>
+          <div className="mt-12">
+            <Offices />
+          </div>
         </div>
       </section>
 

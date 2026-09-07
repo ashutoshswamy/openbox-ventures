@@ -7,9 +7,9 @@ import { ScrollHeadline } from "@/components/ScrollHeadline";
 import { lifePoints, employeeVoices } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Life at Open Box Ventures",
+  title: "Life at OBV",
   description:
-    "Office culture, real-time events, activities, and the work environment at Open Box Ventures — plus what the team says about working here.",
+    "Office culture, activities, and work environment at Open Box Ventures — real events, small teams, and direct ownership across our offices.",
 };
 
 export default function LifePage() {
@@ -17,8 +17,8 @@ export default function LifePage() {
     <>
       <PageHeader
         eyebrow="Life at OBV"
-        title="Real work, real ownership, across every office."
-        intro="Events, office culture, activities, and the day-to-day — a look at what it's actually like here."
+        title="Real work. Real ownership. Real celebrations."
+        intro="Office culture, activities, and the work environment across our offices — the parts of the job that don't show up in a scope of work."
       />
 
       <section className="mx-auto max-w-6xl px-6 py-24 md:px-10 md:py-32">
@@ -34,12 +34,14 @@ export default function LifePage() {
 
       <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
-          <ScrollHeadline className="font-display text-display-lg leading-tight">In the office</ScrollHeadline>
-          <p className="mt-4 max-w-xl text-body-base text-paper/60">
-            {/* ponytail: placeholder tiles until real photos/clips are supplied */}
-            Photos and clips from across our offices — standups, shoot days, festivals, and launches.
-          </p>
-          <div className="mt-10">
+          <ScrollHeadline className="font-display text-display-lg leading-tight">In the room</ScrollHeadline>
+          <ScrollReveal delay={0.05}>
+            <p className="mt-6 max-w-xl text-body-lg text-paper/70">
+              {/* ponytail: placeholder tiles — swap for real photos and employee clips. */}
+              Photos, clips, and moments from across the team.
+            </p>
+          </ScrollReveal>
+          <div className="mt-12">
             <Gallery />
           </div>
         </div>
@@ -48,9 +50,9 @@ export default function LifePage() {
       <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <ScrollHeadline className="font-display text-display-lg leading-tight">From the team</ScrollHeadline>
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
             {employeeVoices.map((v) => (
-              <blockquote key={v.quote} className="rounded-2xl border border-line bg-paper/5 p-6">
+              <blockquote key={v.role} className="rounded-2xl border border-line bg-paper/5 p-6">
                 <p className="font-display text-display-md leading-snug">“{v.quote}”</p>
                 <footer className="mt-4 text-body-sm text-paper/55">
                   {v.name} — {v.role}
@@ -61,7 +63,7 @@ export default function LifePage() {
         </div>
       </section>
 
-      <CTA headline="Want to work here?" body="We hire across logistics, creative, technology, and operations. Send us a note." />
+      <CTA headline="Want in?" body="We hire across logistics, creative, tech, and operations. Tell us where you fit." />
     </>
   );
 }

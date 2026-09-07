@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/PageHeader";
 import { CTA } from "@/components/CTA";
-import { ServiceVisual } from "@/components/ServiceVisual";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollHeadline } from "@/components/ScrollHeadline";
 import { services } from "@/lib/data";
@@ -39,7 +39,15 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <ServiceVisual accent={service.accent} icon={service.icon} label={service.name} />
+            <div className="relative aspect-video w-full overflow-hidden rounded-panel border border-line">
+              <Image
+                src={service.image}
+                alt={`${service.name} at Open Box Ventures`}
+                fill
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </ScrollReveal>
         </div>
 

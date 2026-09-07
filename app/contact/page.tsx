@@ -4,17 +4,13 @@ import { ContactSection } from "@/components/ContactSection";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Bring us the brief. Tell us what you're trying to do and we'll come back with how we'd do it.",
+  description: "Start a project with Open Box Ventures — tell us the brief and we'll come back with how we'd run it.",
 };
 
 export default function ContactPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Contact"
-        title="Let's talk."
-        intro="One team for logistics, marketing, events, technology, and content. Tell us where you want help."
-      />
+      <PageHeader eyebrow="Contact" title="Start a project." />
       <ContactSection />
     </>
   );

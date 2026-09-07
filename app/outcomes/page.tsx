@@ -9,7 +9,7 @@ import { achievements, reviews } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Outcomes",
-  description: "Client feedback, testimonials, platform reviews, and what the work added up to.",
+  description: "Client feedback, reviews, and achievements from Open Box Ventures engagements.",
 };
 
 export default function OutcomesPage() {
@@ -18,7 +18,7 @@ export default function OutcomesPage() {
       <PageHeader
         eyebrow="Outcomes"
         title="The work, and what it added up to."
-        intro="Client feedback, testimonials, reviews from digital platforms, and the milestones we've hit."
+        intro="Client feedback, reviews on digital platforms, and what we've built since 2023."
       />
 
       <section className="mx-auto max-w-6xl px-6 py-24 md:px-10 md:py-32">
@@ -35,17 +35,15 @@ export default function OutcomesPage() {
         </StaggerGroup>
       </section>
 
-      <div className="border-t border-line">
-        <Testimonials />
-      </div>
+      <Testimonials />
 
       <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <ScrollHeadline className="font-display text-display-lg leading-tight">Reviews on digital platforms</ScrollHeadline>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {reviews.map((r, i) => (
-              <ScrollReveal key={r.platform} delay={i * 0.05} className="rounded-2xl border border-line bg-paper/5 p-6">
-                <p className="font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55">{r.platform}</p>
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {reviews.map((r) => (
+              <ScrollReveal key={r.platform} className="rounded-2xl border border-line bg-paper/5 p-6">
+                <p className="font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/50">{r.platform}</p>
                 <p className="mt-3 font-display text-display-lg">{r.rating}</p>
                 <p className="mt-2 text-body-sm text-paper/55">{r.note}</p>
               </ScrollReveal>
@@ -54,7 +52,7 @@ export default function OutcomesPage() {
         </div>
       </section>
 
-      <CTA />
+      <CTA headline="Add your project to this list." />
     </>
   );
 }

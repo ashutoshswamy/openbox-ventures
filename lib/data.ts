@@ -20,13 +20,14 @@ export const company = {
   phone: "+91 00000 00000",
 } as const;
 
+/** `timezone` is an IANA zone for the live local-time readout. */
 export const offices = [
-  { city: "Mohali", region: "Punjab, India", role: "Headquarters" },
-  { city: "Dharamshala", region: "Himachal Pradesh, India" },
-  { city: "Pune", region: "Maharashtra, India" },
-  { city: "Wayne", region: "New Jersey, USA" },
-  { city: "Abbotsford", region: "British Columbia, Canada" },
-  { city: "Sharjah", region: "United Arab Emirates" },
+  { city: "Mohali", country: "India", region: "Punjab, India", role: "Headquarters", timezone: "Asia/Kolkata" },
+  { city: "Dharamshala", country: "India", region: "Himachal Pradesh, India", timezone: "Asia/Kolkata" },
+  { city: "Pune", country: "India", region: "Maharashtra, India", timezone: "Asia/Kolkata" },
+  { city: "Wayne", country: "USA", region: "New Jersey, USA", timezone: "America/New_York" },
+  { city: "Abbotsford", country: "Canada", region: "British Columbia, Canada", timezone: "America/Vancouver" },
+  { city: "Sharjah", country: "UAE", region: "United Arab Emirates", timezone: "Asia/Dubai" },
 ] as const;
 
 export const stats = [
@@ -45,6 +46,7 @@ export const services = [
     name: "Logistics & Supply Chain",
     icon: "Truck",
     accent: "#7ca6c9",
+    image: "/logistics.png",
     tagline: "Freight, dispatch, and cross-border trade, handled end to end.",
     summary:
       "We move goods and paperwork across borders so your operation keeps running. From freight brokerage and truck dispatch to import and export documentation, we take the coordination load off your team.",
@@ -63,6 +65,7 @@ export const services = [
     name: "Marketing & Branding",
     icon: "Megaphone",
     accent: "#c98f7c",
+    image: "/marketing.png",
     tagline: "Positioning, identity, and campaigns that actually move numbers.",
     summary:
       "We build the brand and the demand. Strategy, identity, and full-funnel campaigns designed around your goals and measured against them.",
@@ -81,6 +84,7 @@ export const services = [
     name: "Event Management",
     icon: "CalendarDays",
     accent: "#b3c97c",
+    image: "/events.png",
     tagline: "Launches, conferences, and activations, planned and run on the ground.",
     summary:
       "We handle the whole event — concept, vendors, logistics, and the day itself — so your team can focus on the guests, not the run sheet.",
@@ -99,6 +103,7 @@ export const services = [
     name: "IT Services & Digital Solutions",
     icon: "MonitorSmartphone",
     accent: "#8f7cc9",
+    image: "/it.png",
     tagline: "Software, automation, and support to keep the business moving.",
     summary:
       "We design, build, and maintain the systems your business runs on — web apps, internal tools, integrations, and the support to keep them healthy.",
@@ -117,6 +122,7 @@ export const services = [
     name: "E-Commerce Development",
     icon: "ShoppingCart",
     accent: "#7cc9a6",
+    image: "/ecommerce.png",
     tagline: "Storefronts built to sell and simple to run.",
     summary:
       "We build online stores on the right platform for your catalogue and margins, wired into payments, shipping, and inventory from day one.",
@@ -135,6 +141,7 @@ export const services = [
     name: "Content Creation",
     icon: "PenLine",
     accent: "#c9b37c",
+    image: "/contentcreation.png",
     tagline: "Words, visuals, and video that carry the brand across every channel.",
     summary:
       "We produce the content your channels need — written, designed, and built for how people actually read and scroll.",
@@ -153,6 +160,7 @@ export const services = [
     name: "Photography & Videography",
     icon: "Camera",
     accent: "#7c9fc9",
+    image: "/photovideo.png",
     tagline: "Product, brand, and event shoots, from brief to final cut.",
     summary:
       "We shoot and edit the visuals your brand needs — products, people, spaces, and events — with a crew that plans the shot list before the camera comes out.",
@@ -171,6 +179,7 @@ export const services = [
     name: "Advertising Services",
     icon: "Radio",
     accent: "#c97ca6",
+    image: "/advertising.png",
     tagline: "Media planning and buying across digital, print, and outdoor.",
     summary:
       "We plan, buy, and manage advertising across the channels that reach your audience, and report on what each rupee returned.",
