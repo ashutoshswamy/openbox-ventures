@@ -9,6 +9,7 @@ import { useFloatLabel } from "@/lib/useFloatLabel";
 import { useFieldFocus } from "@/lib/useFieldFocus";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { Check } from "lucide-react";
+import { company, services } from "@/lib/data";
 
 const fieldLabelClass = "font-mono text-utility-xs uppercase tracking-[0.15em]";
 
@@ -46,16 +47,15 @@ export function ContactSection() {
       <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2">
         <div>
           <ScrollReveal>
-            <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">
-              Call Sheet / Get In Touch
-            </p>
+            <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Get In Touch</p>
           </ScrollReveal>
           <ScrollHeadline className="mt-6 font-display text-display-xl leading-tight">
-            Let&apos;s put on a show.
+            Bring us the brief.
           </ScrollHeadline>
           <ScrollReveal delay={0.05}>
             <p className="mt-6 max-w-md text-body-lg text-paper/70">
-              A production to plan — tell us the brief and we&apos;ll take it from there.
+              Tell us what you&apos;re trying to do. We&apos;ll come back with how we&apos;d do it —
+              and who&apos;d run it.
             </p>
           </ScrollReveal>
 
@@ -63,15 +63,15 @@ export function ContactSection() {
             <dl className="mt-8 space-y-4 break-words text-body-sm text-paper/60">
               <div>
                 <dt className="text-paper/55">Email</dt>
-                <dd>hello@openboxventures.com</dd>
+                <dd>{company.email}</dd>
               </div>
               <div>
                 <dt className="text-paper/55">Phone</dt>
-                <dd>+91 00000 00000</dd>
+                <dd>{company.phone}</dd>
               </div>
               <div>
-                <dt className="text-paper/55">Studio</dt>
-                <dd>New Delhi, India</dd>
+                <dt className="text-paper/55">Headquarters</dt>
+                <dd>Mohali, Punjab, India</dd>
               </div>
             </dl>
           </ScrollReveal>
@@ -89,9 +89,7 @@ export function ContactSection() {
               onSubmit={handleSubmit}
               className="space-y-6 border-t border-line pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-16"
             >
-              <p className="font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/50">
-                Production Brief
-              </p>
+              <p className="font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/50">Project Brief</p>
               <FloatField label="Name" name="name" required />
               <FloatField label="Company" name="company" />
               <SelectField />
@@ -139,10 +137,12 @@ function SelectField() {
         <option value="" disabled hidden className="bg-ink">
           Select one
         </option>
-        <option value="media" className="bg-ink">Media Management</option>
-        <option value="content" className="bg-ink">Content Creation & Execution</option>
-        <option value="strategy" className="bg-ink">Strategy & Consulting</option>
-        <option value="other" className="bg-ink">Other</option>
+        {services.map((s) => (
+          <option key={s.slug} value={s.slug} className="bg-ink">
+            {s.name}
+          </option>
+        ))}
+        <option value="multiple" className="bg-ink">Multiple / not sure yet</option>
       </select>
     </div>
   );
