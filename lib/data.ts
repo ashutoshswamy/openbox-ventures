@@ -17,7 +17,7 @@ export const company = {
     "Our multidisciplinary team combines industry expertise, creativity, technology, and strategic thinking to provide end-to-end solutions tailored to each client's goals.",
   ],
   email: "hello@openboxventures.in",
-  phone: "+91 00000 00000",
+  phone: "+91 81264 18219",
 } as const;
 
 /** `timezone` is an IANA zone for the live local-time readout. */
@@ -33,7 +33,6 @@ export const offices = [
 export const stats = [
   { value: 6, suffix: "", label: "Offices worldwide" },
   { value: 4, suffix: "", label: "Countries" },
-  { value: 8, suffix: "", label: "Service lines" },
 ] as const;
 
 /**
@@ -224,75 +223,9 @@ export const processSteps = [
   { title: "Support", body: "Post-delivery reporting and an open line for whatever comes next." },
 ] as const;
 
-// ponytail: placeholder testimonials — swap for real client quotes before launch.
-export const testimonials = [
-  {
-    quote: "They took on marketing, the website, and our launch event as one engagement. One point of contact, nothing dropped.",
-    name: "Client testimonial",
-    role: "Placeholder — retail brand",
-  },
-  {
-    quote: "We stopped managing five agencies and started managing one relationship. The work got better, not worse.",
-    name: "Client testimonial",
-    role: "Placeholder — logistics client",
-  },
-  {
-    quote: "Practical people. Every recommendation came with a plan to actually do it.",
-    name: "Client testimonial",
-    role: "Placeholder — B2B services",
-  },
-] as const;
-
 // ponytail: placeholder outcomes — replace with verified metrics/case studies.
 export const achievements = [
   { value: 6, suffix: "", label: "Offices opened across 4 countries since 2023" },
-  { value: 8, suffix: "", label: "Service lines delivered under one roof" },
   { value: 100, suffix: "+", label: "Projects delivered for brands and businesses" },
 ] as const;
 
-export const reviews = [
-  { platform: "Google", rating: "4.8", note: "Placeholder — connect live rating." },
-  { platform: "Clutch", rating: "4.7", note: "Placeholder — connect live rating." },
-  { platform: "LinkedIn", rating: "—", note: "29 team members and growing." },
-] as const;
-
-// ponytail: gallery is placeholder tiles until real photos/clips land in /public.
-export const lifeGallery = [
-  { caption: "Team standup, Mohali HQ", accent: "#7ca6c9" },
-  { caption: "Campaign shoot day", accent: "#c98f7c" },
-  { caption: "Diwali celebration", accent: "#c9b37c" },
-  { caption: "Client launch event", accent: "#b3c97c" },
-  { caption: "Design critique", accent: "#8f7cc9" },
-  { caption: "Friday demo session", accent: "#7cc9a6" },
-  { caption: "Dharamshala offsite", accent: "#7c9fc9" },
-  { caption: "New joiners week", accent: "#c97ca6" },
-] as const;
-
-export const lifePoints = [
-  {
-    title: "Real work, real ownership",
-    body: "Small teams, direct client contact, and the room to run a project rather than a task list.",
-  },
-  {
-    title: "Across offices, one culture",
-    body: "Mohali, Dharamshala, Pune, and beyond — same standards, same openness, wherever you sit.",
-  },
-  {
-    title: "We celebrate the wins",
-    body: "Launches, festivals, offsites, Friday demos — the calendar isn't only deadlines.",
-  },
-] as const;
-
-// ponytail: placeholder employee voices — replace with real quotes + names/roles.
-export const employeeVoices = [
-  {
-    quote: "I've touched logistics, marketing, and a product build in my first year. You don't get boxed in here.",
-    name: "Team member",
-    role: "Placeholder — Operations",
-  },
-  {
-    quote: "The people who set the strategy are the same people who sit next to you doing the work.",
-    name: "Team member",
-    role: "Placeholder — Creative",
-  },
-] as const;

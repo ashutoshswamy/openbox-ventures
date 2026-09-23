@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 export function ScrollReveal({
@@ -14,13 +14,11 @@ export function ScrollReveal({
   delay?: number;
   y?: number;
 }) {
-  const reduced = useReducedMotion();
-
   return (
     <motion.div
       className={className}
-      initial={reduced ? undefined : { opacity: 0, y }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
     >
@@ -50,14 +48,13 @@ export function StaggerGroup({
   className?: string;
   stagger?: number;
 }) {
-  const reduced = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={reduced ? undefined : "hidden"}
-      whileInView={reduced ? undefined : "show"}
+      initial="hidden"
+      whileInView="show"
       viewport={{ once: true, margin: "-80px" }}
-      variants={reduced ? undefined : staggerContainer(stagger)}
+      variants={staggerContainer(stagger)}
     >
       {children}
     </motion.div>
@@ -65,9 +62,8 @@ export function StaggerGroup({
 }
 
 export function StaggerChild({ children, className }: { children: ReactNode; className?: string }) {
-  const reduced = useReducedMotion();
   return (
-    <motion.div className={className} variants={reduced ? undefined : staggerItem}>
+    <motion.div className={className} variants={staggerItem}>
       {children}
     </motion.div>
   );

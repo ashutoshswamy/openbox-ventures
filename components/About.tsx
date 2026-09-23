@@ -1,46 +1,51 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ScrollReveal, StaggerChild, StaggerGroup } from "./ScrollReveal";
+import { ScrollReveal } from "./ScrollReveal";
 import { ScrollHeadline } from "./ScrollHeadline";
-import { StatCounter } from "./StatCounter";
-import { stats, company } from "@/lib/data";
+import { company } from "@/lib/data";
 
 export function About() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-28 md:px-10 md:py-36">
-      <ScrollReveal>
-        <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Who We Are</p>
-      </ScrollReveal>
+    <section className="overflow-hidden border-t border-line px-6 py-24 md:px-10 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+          <div>
+            <ScrollReveal>
+              <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Who We Are</p>
+            </ScrollReveal>
+            <ScrollHeadline className="mt-6 font-display text-display-lg leading-[1.05]">
+              Businesses shouldn&apos;t need a dozen providers to bring one idea to life.
+            </ScrollHeadline>
+          </div>
 
-      <ScrollHeadline className="mt-6 max-w-3xl font-display text-display-lg leading-tight">
-        Businesses shouldn&apos;t need a dozen providers to bring one idea to life.
-      </ScrollHeadline>
+          <div className="lg:pt-10">
+            <ScrollReveal delay={0.1}>
+              <p className="text-body-lg text-paper/80">{company.about[0]}</p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.15}>
+              <p className="mt-5 text-body-base text-paper/60">{company.about[1]}</p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <Link
+                href="/about"
+                className="mt-8 inline-flex h-12 items-center justify-center rounded-panel border border-paper/30 px-6 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+              >
+                More about Open Box Ventures →
+              </Link>
+            </ScrollReveal>
+          </div>
+        </div>
 
-      <ScrollReveal delay={0.1}>
-        <p className="mt-8 max-w-2xl text-body-lg text-paper/70">{company.about[0]}</p>
-      </ScrollReveal>
-      <ScrollReveal delay={0.15}>
-        <p className="mt-4 max-w-2xl text-body-lg text-paper/70">{company.about[1]}</p>
-      </ScrollReveal>
-
-      <StaggerGroup className="mt-16 grid grid-cols-3 gap-8 border-t border-line pt-10">
-        {stats.map((s) => (
-          <StaggerChild key={s.label}>
-            <div className="font-display text-display-lg text-paper">
-              <StatCounter value={s.value} suffix={s.suffix} />
-            </div>
-            <p className="mt-2 text-body-sm text-paper/60">{s.label}</p>
-          </StaggerChild>
-        ))}
-      </StaggerGroup>
-
-      <ScrollReveal delay={0.1}>
-        <Link
-          href="/about"
-          className="mt-12 inline-flex items-center gap-2 font-mono text-utility-base uppercase tracking-[0.15em] text-paper/70 transition-colors hover:text-paper"
-        >
-          More about Open Box Ventures →
-        </Link>
-      </ScrollReveal>
+        <ScrollReveal delay={0.1} className="mt-16 md:mt-20">
+          <Image
+            src="/whoweare.png"
+            alt="Open Box Ventures offices across India, USA, Canada and UAE: 6 offices across 4 countries"
+            width={1536}
+            height={1024}
+            className="h-auto w-full mix-blend-screen [mask-image:radial-gradient(ellipse_75%_75%_at_50%_50%,#000_55%,transparent_100%)]"
+          />
+        </ScrollReveal>
+      </div>
     </section>
   );
 }

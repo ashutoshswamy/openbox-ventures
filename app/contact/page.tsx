@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/PageHeader";
 import { ContactSection } from "@/components/ContactSection";
 
 export const metadata: Metadata = {
@@ -10,7 +9,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHeader eyebrow="Contact" title="Start a project." />
       <ContactSection />
     </>
   );

@@ -46,60 +46,71 @@ const flags: Record<string, React.ReactNode> = {
   ),
 };
 
-function useLocalTime(timezone: string) {
-  const [time, setTime] = useState("");
+/** Live local clock. */
+function useLocalClock(timezone: string) {
+  const [clock, setClock] = useState<{ time: string; period: string } | null>(null);
   useEffect(() => {
-    const fmt = () =>
-      new Intl.DateTimeFormat("en-US", {
+    const tick = () => {
+      const parts = new Intl.DateTimeFormat("en-US", {
         timeZone: timezone,
         hour: "2-digit",
         minute: "2-digit",
-        hour12: true,
-      }).format(new Date());
-    setTime(fmt());
-    const id = setInterval(() => setTime(fmt()), 30_000);
+        hour12: false,
+      }).formatToParts(new Date());
+      const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+      const h = Number(get("hour")) % 24;
+      setClock({
+        time: `${String(h % 12 || 12).padStart(2, "0")}:${get("minute")}`,
+        period: h >= 12 ? "PM" : "AM",
+      });
+    };
+    tick();
+    const id = setInterval(tick, 30_000);
     return () => clearInterval(id);
   }, [timezone]);
-  return time;
+  return clock;
 }
 
 function OfficeColumn({ office, className }: { office: (typeof offices)[number]; className: string }) {
-  const time = useLocalTime(office.timezone);
+  const clock = useLocalClock(office.timezone);
+  const hq = "role" in office;
   return (
-    <div className={`flex flex-col ${className}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="font-display text-display-md leading-none text-paper">{office.country}</p>
-          <p className="mt-2 font-mono text-utility-sm tabular-nums text-paper/55" suppressHydrationWarning>
-            {time || "—"}
-          </p>
+    <div className={`group flex min-w-0 flex-col ${className}`}>
+      <div className="flex h-7 items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <svg viewBox="0 0 60 40" className="h-[18px] w-[27px] shrink-0 rounded-[2px] border border-line" aria-hidden>
+            {flags[office.country]}
+          </svg>
+          <p className="truncate font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55">{office.country}</p>
         </div>
-        <svg
-          viewBox="0 0 60 40"
-          className="h-7 w-[42px] shrink-0 rounded-[2px] border border-line"
-          aria-hidden
-        >
-          {flags[office.country]}
-        </svg>
+        {hq && (
+          <span className="rounded-full bg-paper px-2.5 py-1 font-mono text-utility-xs uppercase tracking-[0.12em] text-ink">
+            HQ
+          </span>
+        )}
       </div>
-      <p className="mt-6 text-body-sm text-paper/70">{office.city}</p>
-      <p className="mt-1 text-body-sm text-paper/50">{office.region}</p>
-      {"role" in office && (
-        <p className="mt-3 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/40">{office.role}</p>
-      )}
+
+      <p
+        className="mt-6 font-display text-[clamp(28px,3.2vw,44px)] leading-none tabular-nums text-paper/40 transition-colors duration-300 group-hover:text-paper"
+        suppressHydrationWarning
+      >
+        {clock ? clock.time : "--:--"}
+        <span className="ml-1.5 text-utility-sm font-medium tracking-normal text-paper/40">{clock?.period}</span>
+      </p>
+
+      <p className="mt-6 truncate font-display text-[clamp(15px,1.25vw,18px)] leading-tight tracking-tight text-paper">{office.city}</p>
+      <p className="mt-1.5 truncate text-body-sm text-paper/50">{office.region.replace(/, (India|USA|Canada)$/, "")}</p>
     </div>
   );
 }
 
-// index -> hairline divider classes (mobile top divider; md adds left divider)
+// hairline dividers only in the single-row (xl) layout; stacked layouts use a top rule on mobile
 const dividerClass = (i: number) =>
-  i === 0
-    ? "border-t border-line pt-8 md:border-t-0 md:pt-0"
-    : "border-t border-line pt-8 md:border-t-0 md:pt-0 md:border-l md:border-line md:pl-8";
+  `border-t border-line pt-6 xl:border-t-0 xl:pt-0 ${i === 0 ? "" : "xl:border-l xl:border-line xl:pl-6"}`;
 
 export function Offices() {
   return (
-    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+    <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-3 xl:grid-cols-6">
       {offices.map((o, i) => (
         <OfficeColumn key={o.city} office={o} className={dividerClass(i)} />
       ))}

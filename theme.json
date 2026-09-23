@@ -3,11 +3,11 @@
   "description": "Two-color palette derived from the Open Box Ventures (OBV) logo",
   "colors": {
     "ink": {
-      "hex": "#0A0A0A",
+      "hex": "#000000",
       "role": "Background"
     },
     "paper": {
-      "hex": "#EDEAE1",
+      "hex": "#FFFFFF",
       "role": "Text / foreground"
     }
   }

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { CTA } from "@/components/CTA";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { ScrollReveal, StaggerGroup, StaggerChild } from "@/components/ScrollReveal";
 import { ScrollHeadline } from "@/components/ScrollHeadline";
-import { Offices } from "@/components/Offices";
-import { company, differentiators } from "@/lib/data";
+import { StatCounter } from "@/components/StatCounter";
+import { company, differentiators, stats } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
@@ -24,17 +24,17 @@ export default function AboutPage() {
             </ScrollReveal>
           ))}
         </div>
-      </section>
 
-      <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">
-        <div className="mx-auto max-w-6xl">
-          <ScrollHeadline className="max-w-2xl font-display text-display-lg leading-tight">
-            Where we work
-          </ScrollHeadline>
-          <div className="mt-12">
-            <Offices />
-          </div>
-        </div>
+        <StaggerGroup className="mt-16 grid grid-cols-2 gap-6 border-t border-line pt-10 sm:gap-8">
+          {stats.map((s) => (
+            <StaggerChild key={s.label}>
+              <div className="font-display text-display-lg text-paper">
+                <StatCounter value={s.value} suffix={s.suffix} />
+              </div>
+              <p className="mt-2 text-body-sm text-paper/60">{s.label}</p>
+            </StaggerChild>
+          ))}
+        </StaggerGroup>
       </section>
 
       <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">

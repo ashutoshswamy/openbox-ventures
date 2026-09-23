@@ -15,7 +15,7 @@ export function OutcomesTeaser() {
           The work, and what it added up to.
         </ScrollHeadline>
 
-        <StaggerGroup className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-10 sm:grid-cols-3">
+        <StaggerGroup className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-10 sm:grid-cols-2">
           {achievements.map((a) => (
             <StaggerChild key={a.label}>
               <div className="font-display text-display-lg text-paper">

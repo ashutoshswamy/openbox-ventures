@@ -34,7 +34,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start">
           <ScrollReveal>
             <p className="text-body-lg text-paper/75">{service.summary}</p>
-            <p className="mt-6 font-mono text-utility-sm uppercase tracking-[0.15em]" style={{ color: service.accent }}>
+            <p className="mt-6 font-mono text-utility-sm uppercase tracking-[0.15em] text-paper/70">
               {service.outcome}
             </p>
           </ScrollReveal>
@@ -56,7 +56,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
             {service.offerings.map((o) => (
               <li key={o} className="flex gap-3 border-b border-line pb-4 text-body-base text-paper/80">
-                <span style={{ color: service.accent }}>—</span>
+                <span className="text-paper/50">—</span>
                 {o}
               </li>
             ))}

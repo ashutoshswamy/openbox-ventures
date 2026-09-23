@@ -11,7 +11,7 @@ import { services } from "@/lib/data";
 const links = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services", services: true },
-  { href: "/life", label: "Life at OBV" },
+  { href: "/industries", label: "Industries" },
   { href: "/outcomes", label: "Outcomes" },
 ];
 
@@ -44,12 +44,12 @@ export function SiteHeader() {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-          scrolled || open ? "bg-ink/90 backdrop-blur border-b border-line" : "bg-transparent"
-        }`}
-      >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+      <header className="pointer-events-none fixed inset-x-0 top-4 z-50 px-4 md:px-6">
+        <nav
+          className={`pointer-events-auto mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-line px-5 py-3 backdrop-blur-xl transition-colors duration-500 md:px-8 ${
+            scrolled || open ? "bg-ink/90" : "bg-ink/50"
+          }`}
+        >
           <Link href="/" aria-label="Open Box Ventures — home" className="block">
             <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={48} height={48} priority className="h-12 w-12" />
           </Link>

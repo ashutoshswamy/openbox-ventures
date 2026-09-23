@@ -3,9 +3,9 @@
 :root {
   /* Open Box Ventures (OBV) theme — see theme.json. Two colors only: every
      other tone below is an opacity mix of these two. */
-  --color-ink: #0a0a0a; /* Background */
-  --color-paper: #edeae1; /* text / foreground */
-  --color-line: rgba(237, 234, 225, 0.14);
+  --color-ink: #000000; /* Background */
+  --color-paper: #ffffff; /* text / foreground */
+  --color-line: rgba(255, 255, 255, 0.14);
 }
 
 @theme inline {
@@ -14,9 +14,9 @@
   --color-line: var(--color-line);
 
   /* Typography roles — see typography.json */
-  --font-display: var(--font-anton);
-  --font-body: var(--font-inter);
-  --font-mono: var(--font-ibm-plex-mono);
+  --font-display: var(--font-dm-sans);
+  --font-body: var(--font-dm-sans);
+  --font-mono: var(--font-dm-sans);
 
   --text-display-xl: clamp(44px, 8vw, 96px);
   --text-display-lg: clamp(30px, 5vw, 52px);
@@ -88,5 +88,6 @@ select {
 .font-display {
   font-family: var(--font-display), sans-serif;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }

@@ -3,7 +3,7 @@
   "description": "Typography system for Open Box Ventures LLP (OBV)",
   "roles": {
     "display": {
-      "fontFamily": "Anton",
+      "fontFamily": "DM Sans",
       "fallback": "sans-serif",
       "weight": 400,
       "textTransform": "uppercase",
@@ -15,7 +15,7 @@
       }
     },
     "body": {
-      "fontFamily": "Inter",
+      "fontFamily": "DM Sans",
       "fallback": "sans-serif",
       "weights": [400, 500, 600, 700],
       "usage": "Paragraphs / general copy",
@@ -26,7 +26,7 @@
       }
     },
     "utility": {
-      "fontFamily": "IBM Plex Mono",
+      "fontFamily": "DM Sans",
       "fallback": "monospace",
       "weights": [400, 500, 600],
       "usage": "Labels, tags, data, timestamps",

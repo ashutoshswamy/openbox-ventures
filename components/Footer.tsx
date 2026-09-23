@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SocialIcon } from "react-social-icons";
-import { services, company } from "@/lib/data";
+import { services, company, offices } from "@/lib/data";
 import { Offices } from "./Offices";
 
 const socials = [
@@ -13,7 +13,7 @@ const socials = [
 const siteLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
-  { href: "/life", label: "Life at OBV" },
+  { href: "/industries", label: "Industries" },
   { href: "/outcomes", label: "Outcomes" },
   { href: "/contact", label: "Contact" },
 ];
@@ -24,15 +24,37 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line px-6 py-16 md:px-10">
+    <footer className="border-t border-line px-6 pb-10 pt-20 md:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-          <div className="col-span-2">
-            <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={40} height={40} className="h-10 w-10" />
-            <p className="mt-4 max-w-xs text-body-sm text-paper/60">{company.tagline} {company.blurb}</p>
+        <div className="flex flex-col gap-8 border-b border-line pb-16 md:flex-row md:items-end md:justify-between">
+          <p className="max-w-2xl font-display text-display-lg leading-[1.05]">Have a brief? Let&apos;s talk.</p>
+          <Link
+            href="/contact"
+            className="inline-flex h-14 shrink-0 items-center justify-center rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+          >
+            Start a Project
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-[1.4fr_1fr_0.7fr]">
+          <div className="col-span-2 md:col-span-1">
+            <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={64} height={64} className="h-16 w-16" />
+            <p className="mt-5 max-w-xs text-body-sm text-paper/60">{company.tagline}</p>
+            <ul className="mt-5 space-y-1 text-body-sm text-paper/70">
+              <li>
+                <a href={`mailto:${company.email}`} className="transition-colors hover:text-paper">
+                  {company.email}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-paper">
+                  {company.phone}
+                </a>
+              </li>
+            </ul>
           </div>
 
-          <div className="border-t border-line pt-8 md:border-t-0 md:pt-0 md:border-l md:pl-8">
+          <div>
             <p className={labelClass}>Services</p>
             <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
               {services.map((s) => (
@@ -45,7 +67,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="border-t border-l border-line pt-8 pl-8 md:border-t-0 md:pt-0">
+          <div>
             <p className={labelClass}>Company</p>
             <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
               {siteLinks.map((l) => (
@@ -57,16 +79,20 @@ export function Footer() {
               ))}
             </ul>
           </div>
+
         </div>
 
-        <div className="mt-12 border-t border-line pt-8">
+        <div className="border-t border-line py-12">
           <p className={labelClass}>Offices</p>
-          <div className="mt-8">
+          <p className="mt-4 max-w-3xl font-display text-display-lg leading-[1.05]">
+            {offices.length} offices. {new Set(offices.map((o) => o.country)).size} countries. {new Set(offices.map((o) => o.timezone)).size} time zones.
+          </p>
+          <div className="mt-12">
             <Offices />
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-6 border-t border-line pt-8 text-body-sm text-paper/55 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-6 border-t border-line pt-8 text-body-sm text-paper/55 md:flex-row md:items-center md:justify-between">
           <p>
             © {company.founded}–{year} {company.legalName}. All rights reserved.
           </p>
