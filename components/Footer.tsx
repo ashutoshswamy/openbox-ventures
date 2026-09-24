@@ -14,7 +14,6 @@ const siteLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
-  { href: "/outcomes", label: "Outcomes" },
   { href: "/contact", label: "Contact" },
 ];
 

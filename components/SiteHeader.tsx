@@ -12,7 +12,6 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services", services: true },
   { href: "/industries", label: "Industries" },
-  { href: "/outcomes", label: "Outcomes" },
 ];
 
 export function SiteHeader() {

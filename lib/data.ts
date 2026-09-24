@@ -222,10 +222,3 @@ export const processSteps = [
   { title: "Deliver", body: "On time and on brief, with the handover your team needs to run it." },
   { title: "Support", body: "Post-delivery reporting and an open line for whatever comes next." },
 ] as const;
-
-// ponytail: placeholder outcomes — replace with verified metrics/case studies.
-export const achievements = [
-  { value: 6, suffix: "", label: "Offices opened across 4 countries since 2023" },
-  { value: 100, suffix: "+", label: "Projects delivered for brands and businesses" },
-] as const;
-
