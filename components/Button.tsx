@@ -1,6 +1,6 @@
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type ReactNode } from "react";
 
-/** One button look, used everywhere — sharp-cornered panel radius, two variants. */
+/** One button look, used everywhere - sharp-cornered panel radius, two variants. */
 const base = "inline-flex h-14 items-center justify-center gap-2 rounded-panel px-7 text-body-sm font-medium transition-colors";
 
 const variants = {

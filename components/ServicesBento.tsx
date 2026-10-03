@@ -16,7 +16,7 @@ function StatCell({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-/** name/tagline pulled straight from lib/data.ts — no invented copy. */
+/** name/tagline pulled straight from lib/data.ts - no invented copy. */
 function ServiceCell({
   slug,
   name,

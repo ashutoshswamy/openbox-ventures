@@ -51,12 +51,12 @@ export function ContactSection() {
             <ScrollReveal>
               <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Get In Touch</p>
             </ScrollReveal>
-            <ScrollHeadline className="mt-6 font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">
+            <ScrollHeadline as="h1" className="mt-6 font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">
               Bring us the brief.
             </ScrollHeadline>
             <ScrollReveal delay={0.05}>
               <p className="mt-6 max-w-md text-body-lg text-paper/70">
-                Tell us what you&apos;re trying to do. We&apos;ll come back with how we&apos;d do it — and who&apos;d run it.
+                Tell us what you&apos;re trying to do. We&apos;ll come back with how we&apos;d do it - and who&apos;d run it.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
@@ -131,7 +131,7 @@ export function ContactSection() {
             {sent ? (
               <div className="flex min-h-96 flex-col items-center justify-center rounded-panel border border-line text-center">
                 <Check className="h-8 w-8 text-accent" strokeWidth={1.4} />
-                <p className="mt-6 font-display text-display-md">Thanks — we&apos;ll be in touch.</p>
+                <p className="mt-6 font-display text-display-md">Thanks - we&apos;ll be in touch.</p>
                 {/* form is not yet wired to a backend/CRM */}
                 <p className="mt-2 text-body-sm text-paper/60">We&apos;ll follow up within one business day.</p>
               </div>

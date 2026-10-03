@@ -42,7 +42,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             <div className="relative aspect-video w-full overflow-hidden rounded-panel border border-line">
               <Image
                 src={service.image}
-                alt={`${service.name} at Open Box Ventures`}
+                alt={`${service.name} at Open Box Ventures LLP`}
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
@@ -56,7 +56,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
             {service.offerings.map((o) => (
               <li key={o} className="flex gap-3 border-b border-line pb-4 text-body-base text-paper/80">
-                <span className="text-paper/50">—</span>
+                <span className="text-paper/50">-</span>
                 {o}
               </li>
             ))}

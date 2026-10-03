@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger, withReducedMotion } from "@/lib/gsap";
 import { DUR, EASE } from "@/lib/motion-tokens";
 
-/** Reveals a card grid's direct children with ScrollTrigger.batch() — one trigger for the whole grid, not one per card. */
+/** Reveals a card grid's direct children with ScrollTrigger.batch() - one trigger for the whole grid, not one per card. */
 export function useCardGridReveal<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
 

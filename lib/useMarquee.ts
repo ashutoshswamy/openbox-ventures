@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, withReducedMotion } from "@/lib/gsap";
 import { DUR } from "@/lib/motion-tokens";
 
-/** Infinite horizontal marquee — track must render its children duplicated (e.g. [...items, ...items]) for a seamless loop. Pausable on hover. */
+/** Infinite horizontal marquee - track must render its children duplicated (e.g. [...items, ...items]) for a seamless loop. Pausable on hover. */
 export function useMarquee(duration: number = DUR.marquee) {
   const trackRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);

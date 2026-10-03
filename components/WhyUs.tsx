@@ -14,7 +14,7 @@ export function WhyUs() {
           <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Why us</p>
         </ScrollReveal>
         <ScrollHeadline className="mt-6 max-w-3xl font-display text-display-lg leading-[1.05]">
-          Why Open Box Ventures
+          Why Open Box Ventures LLP
         </ScrollHeadline>
 
         <StaggerGroup className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">

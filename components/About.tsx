@@ -30,7 +30,7 @@ export function About() {
                 href="/about"
                 className="mt-8 inline-flex h-12 items-center justify-center rounded-panel border border-paper/30 px-6 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
-                More about Open Box Ventures →
+                More about Open Box Ventures LLP →
               </Link>
             </ScrollReveal>
           </div>
@@ -39,7 +39,7 @@ export function About() {
         <ScrollReveal delay={0.1} className="mt-16 md:mt-20">
           <Image
             src="/whoweare.png"
-            alt="Open Box Ventures offices across India, USA, Canada and UAE: 6 offices across 4 countries"
+            alt="Open Box Ventures LLP offices across India, USA, Canada and UAE: 6 offices across 4 countries"
             width={1536}
             height={1024}
             className="h-auto w-full mix-blend-screen [mask-image:radial-gradient(ellipse_75%_75%_at_50%_50%,#000_55%,transparent_100%)]"

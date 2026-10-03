@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  /* Open Box Ventures (OBV) theme — see theme.json. Ink + paper, plus one
+  /* Open Box Ventures LLP (OBV) theme - see theme.json. Ink + paper, plus one
      accent used sparingly (elephantdesign-style neon). */
   --color-ink: #000000; /* Background */
   --color-paper: #ffffff; /* text / foreground */
-  --color-accent: #92eeff; /* neon accent — CTAs, highlights, active states only */
+  --color-accent: #92eeff; /* neon accent - CTAs, highlights, active states only */
   --color-line: rgba(255, 255, 255, 0.14);
 }
 
@@ -15,7 +15,7 @@
   --color-accent: var(--color-accent);
   --color-line: var(--color-line);
 
-  /* Typography roles — see typography.json */
+  /* Typography roles - see typography.json */
   --font-display: var(--font-dm-sans);
   --font-body: var(--font-dm-sans);
   --font-mono: var(--font-dm-sans);
@@ -33,7 +33,7 @@
   --text-utility-sm: 12px;
   --text-utility-xs: 11px;
 
-  /* near-sharp corners for stage/panel treatments — deliberately not the
+  /* near-sharp corners for stage/panel treatments - deliberately not the
      rounded-2xl used on card grids elsewhere */
   --radius-panel: 4px;
 }
@@ -69,7 +69,7 @@ body {
 }
 
 /* form controls don't inherit sizing from utility classes reliably across
-   browsers — pin height/resize here as the single source of truth so no
+   browsers - pin height/resize here as the single source of truth so no
    field can silently balloon to its UA default (esp. on focus/validation) */
 input,
 select {

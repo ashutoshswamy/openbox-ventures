@@ -62,7 +62,7 @@ export function VideoHero() {
     if (reduced) return setPhase("done");
     window.scrollTo(0, 0);
     document.documentElement.style.overflow = "hidden";
-    // autoplay can be blocked (e.g. low-power mode) — don't trap the visitor behind the overlay
+    // autoplay can be blocked (e.g. low-power mode) - don't trap the visitor behind the overlay
     videoRef.current?.play().catch(finish);
     return () => {
       document.documentElement.style.overflow = "";
@@ -118,7 +118,7 @@ export function VideoHero() {
             className="mt-6 max-w-lg text-body-lg text-paper/75"
           >
             Logistics, marketing, events, technology, e-commerce, content,
-            photography and advertising — every service line under one
+            photography and advertising - every service line under one
             accountable team, so you brief once and we deliver.
           </motion.p>
           <motion.div
@@ -151,7 +151,7 @@ export function VideoHero() {
         >
           <Image
             src="/hero.png"
-            alt="Open Box Ventures service lines connected around one hub"
+            alt="Open Box Ventures LLP service lines connected around one hub"
             width={1698}
             height={926}
             priority

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, withReducedMotion } from "@/lib/gsap";
 
-/** Magnetic hover for primary CTAs — quickTo on x/y, springs back on leave. */
+/** Magnetic hover for primary CTAs - quickTo on x/y, springs back on leave. */
 export function useMagnetic<T extends HTMLElement>(strength = 0.35) {
   const ref = useRef<T | null>(null);
 

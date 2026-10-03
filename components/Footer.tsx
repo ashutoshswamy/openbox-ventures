@@ -1,14 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SocialIcon } from "react-social-icons";
-import { services, company, offices } from "@/lib/data";
+import { services, company, offices, socials } from "@/lib/data";
 import { Offices } from "./Offices";
-
-const socials = [
-  { network: "linkedin", url: "https://in.linkedin.com/company/open-box-ventures-llp" },
-  { network: "instagram", url: "https://instagram.com/openboxventures" },
-  { network: "x", url: "https://x.com/openboxventures" },
-];
 
 const siteLinks = [
   { href: "/about", label: "About" },

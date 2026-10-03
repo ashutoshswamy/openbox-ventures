@@ -5,20 +5,27 @@
  */
 
 export const company = {
-  name: "Open Box Ventures",
+  name: "Open Box Ventures LLP",
+  url: "https://openboxventures.in",
   legalName: "Open Box Ventures LLP",
   founded: 2023,
   tagline: "A diversified business solutions company.",
   blurb:
-    "Open Box Ventures is a diversified business solutions company helping brands and businesses grow, connect, and operate more effectively in an ever-changing global marketplace.",
+    "Open Box Ventures LLP is a diversified business solutions company helping brands and businesses grow, connect, and operate more effectively in an ever-changing global marketplace.",
   about: [
-    "Founded in 2023, Open Box Ventures brings a broad range of services together under one roof so businesses don't have to stitch together a dozen different providers to bring an idea to life.",
+    "Founded in 2023, Open Box Ventures LLP brings a broad range of services together under one roof so businesses don't have to stitch together a dozen different providers to bring an idea to life.",
     "With teams across India, the United States, Canada, and the UAE, our international presence lets us work with clients across markets while delivering solutions that are creative, practical, scalable, and results-driven.",
     "Our multidisciplinary team combines industry expertise, creativity, technology, and strategic thinking to provide end-to-end solutions tailored to each client's goals.",
   ],
   email: "hello@openboxventures.in",
   phone: "+91 81264 18219",
 } as const;
+
+export const socials = [
+  { network: "linkedin", url: "https://in.linkedin.com/company/open-box-ventures-llp" },
+  { network: "instagram", url: "https://instagram.com/openboxventures" },
+  { network: "x", url: "https://x.com/openboxventures" },
+] as const;
 
 /** `timezone` is an IANA zone for the live local-time readout. */
 export const offices = [
@@ -86,7 +93,7 @@ export const services = [
     image: "/events.png",
     tagline: "Launches, conferences, and activations, planned and run on the ground.",
     summary:
-      "We handle the whole event — concept, vendors, logistics, and the day itself — so your team can focus on the guests, not the run sheet.",
+      "We handle the whole event - concept, vendors, logistics, and the day itself - so your team can focus on the guests, not the run sheet.",
     offerings: [
       "Concept & creative direction",
       "Venue sourcing & vendor management",
@@ -105,7 +112,7 @@ export const services = [
     image: "/it.png",
     tagline: "Software, automation, and support to keep the business moving.",
     summary:
-      "We design, build, and maintain the systems your business runs on — web apps, internal tools, integrations, and the support to keep them healthy.",
+      "We design, build, and maintain the systems your business runs on - web apps, internal tools, integrations, and the support to keep them healthy.",
     offerings: [
       "Web & mobile application development",
       "Business process automation",
@@ -143,7 +150,7 @@ export const services = [
     image: "/contentcreation.png",
     tagline: "Words, visuals, and video that carry the brand across every channel.",
     summary:
-      "We produce the content your channels need — written, designed, and built for how people actually read and scroll.",
+      "We produce the content your channels need - written, designed, and built for how people actually read and scroll.",
     offerings: [
       "Copywriting & editorial",
       "Social & short-form content",
@@ -162,7 +169,7 @@ export const services = [
     image: "/photovideo.png",
     tagline: "Product, brand, and event shoots, from brief to final cut.",
     summary:
-      "We shoot and edit the visuals your brand needs — products, people, spaces, and events — with a crew that plans the shot list before the camera comes out.",
+      "We shoot and edit the visuals your brand needs - products, people, spaces, and events - with a crew that plans the shot list before the camera comes out.",
     offerings: [
       "Product & catalogue photography",
       "Brand & lifestyle shoots",
@@ -199,7 +206,7 @@ export type Service = (typeof services)[number];
 export const differentiators = [
   {
     title: "Everything under one roof",
-    body: "Every discipline your business needs, held by one team — no juggling vendors, no gaps where accountability gets lost.",
+    body: "Every discipline your business needs, held by one team - no juggling vendors, no gaps where accountability gets lost.",
   },
   {
     title: "Multidisciplinary by default",
@@ -211,13 +218,13 @@ export const differentiators = [
   },
   {
     title: "Built around your goals",
-    body: "Solutions shaped to each client's objectives — creative, practical, scalable, and results-driven.",
+    body: "Solutions shaped to each client's objectives - creative, practical, scalable, and results-driven.",
   },
 ] as const;
 
 export const processSteps = [
   { title: "Discover", body: "We map the brief against your audience, your constraints, and what success actually looks like." },
-  { title: "Plan", body: "Scope, budget, and timeline locked before any work starts — no moving goalposts." },
+  { title: "Plan", body: "Scope, budget, and timeline locked before any work starts - no moving goalposts." },
   { title: "Execute", body: "One accountable team runs delivery, on the ground and in real time." },
   { title: "Deliver", body: "On time and on brief, with the handover your team needs to run it." },
   { title: "Support", body: "Post-delivery reporting and an open line for whatever comes next." },

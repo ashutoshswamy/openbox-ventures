@@ -49,7 +49,7 @@ export function SiteHeader() {
             scrolled || open ? "bg-ink/90" : "bg-ink/50"
           }`}
         >
-          <Link href="/" aria-label="Open Box Ventures — home" className="block">
+          <Link href="/" aria-label="Open Box Ventures LLP - home" className="block">
             <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={48} height={48} priority className="h-12 w-12" />
           </Link>
 
