@@ -4,8 +4,8 @@ import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type 
 const base = "inline-flex h-14 items-center justify-center gap-2 rounded-panel px-7 text-body-sm font-medium transition-colors";
 
 const variants = {
-  solid: "bg-paper text-ink",
-  outline: "border border-paper/30 text-paper hover:border-paper hover:bg-paper hover:text-ink",
+  solid: "bg-accent text-ink",
+  outline: "border border-paper/30 text-paper hover:border-accent hover:bg-accent hover:text-ink",
 } as const;
 
 type Variant = keyof typeof variants;

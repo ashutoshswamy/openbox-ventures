@@ -130,7 +130,7 @@ export function VideoHero() {
           >
             <Link
               href="/services"
-              className="inline-flex h-14 items-center justify-center rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+              className="inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
             >
               Explore Services
             </Link>

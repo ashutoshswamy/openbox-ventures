@@ -37,7 +37,7 @@ function ServiceCell({
       <div>
         <p className="flex items-start gap-1.5 text-display-md leading-[1.05] text-paper" style={bentoTitleStyle}>
           {name}
-          <ArrowDownRight className="mt-1 h-5 w-5 shrink-0 text-paper transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" strokeWidth={1.8} />
+          <ArrowDownRight className="mt-1 h-5 w-5 shrink-0 text-accent transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" strokeWidth={1.8} />
         </p>
         <p className="mt-2 text-body-sm text-paper/55">{tagline}</p>
       </div>

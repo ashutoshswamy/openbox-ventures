@@ -63,7 +63,7 @@ export function SiteHeader() {
               >
                 <Link
                   href={l.href}
-                  className={`inline-flex items-center gap-1 transition-colors hover:text-paper ${
+                  className={`inline-flex items-center gap-1 transition-colors hover:text-accent ${
                     isActive(l.href) ? "text-paper" : "text-paper/80"
                   }`}
                 >
@@ -86,14 +86,14 @@ export function SiteHeader() {
                             <Link
                               key={s.slug}
                               href={`/services/${s.slug}`}
-                              className="block rounded-[3px] px-3 py-2 text-body-sm text-paper/75 transition-colors hover:bg-paper/8 hover:text-paper"
+                              className="block rounded-[3px] px-3 py-2 text-body-sm text-paper/75 transition-colors hover:bg-paper/8 hover:text-accent"
                             >
                               {s.name}
                             </Link>
                           ))}
                           <Link
                             href="/services"
-                            className="mt-1 block border-t border-line px-3 pt-3 pb-1 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-paper"
+                            className="mt-1 block border-t border-line px-3 pt-3 pb-1 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-accent"
                           >
                             All services →
                           </Link>
@@ -184,7 +184,7 @@ export function SiteHeader() {
             <Link
               href="/contact"
               onClick={closeMobile}
-              className="mt-6 inline-flex h-14 items-center justify-center rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+              className="mt-6 inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
             >
               Start a Project
             </Link>

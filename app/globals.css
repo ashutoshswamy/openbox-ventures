@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  /* Open Box Ventures (OBV) theme — see theme.json. Two colors only: every
-     other tone below is an opacity mix of these two. */
+  /* Open Box Ventures (OBV) theme — see theme.json. Ink + paper, plus one
+     accent used sparingly (elephantdesign-style neon). */
   --color-ink: #000000; /* Background */
   --color-paper: #ffffff; /* text / foreground */
+  --color-accent: #92eeff; /* neon accent — CTAs, highlights, active states only */
   --color-line: rgba(255, 255, 255, 0.14);
 }
 
 @theme inline {
   --color-ink: var(--color-ink);
   --color-paper: var(--color-paper);
+  --color-accent: var(--color-accent);
   --color-line: var(--color-line);
 
   /* Typography roles — see typography.json */
@@ -62,7 +64,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-paper);
+  background: var(--color-accent);
   color: var(--color-ink);
 }
 

@@ -29,7 +29,7 @@ export function Footer() {
           <p className="max-w-2xl font-display text-display-lg leading-[1.05]">Have a brief? Let&apos;s talk.</p>
           <Link
             href="/contact"
-            className="inline-flex h-14 shrink-0 items-center justify-center rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+            className="inline-flex h-14 shrink-0 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
           >
             Start a Project
           </Link>
@@ -41,12 +41,12 @@ export function Footer() {
             <p className="mt-5 max-w-xs text-body-sm text-paper/60">{company.tagline}</p>
             <ul className="mt-5 space-y-1 text-body-sm text-paper/70">
               <li>
-                <a href={`mailto:${company.email}`} className="transition-colors hover:text-paper">
+                <a href={`mailto:${company.email}`} className="transition-colors hover:text-accent">
                   {company.email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-paper">
+                <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-accent">
                   {company.phone}
                 </a>
               </li>
@@ -58,7 +58,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
               {services.map((s) => (
                 <li key={s.slug}>
-                  <Link href={`/services/${s.slug}`} className="transition-colors hover:text-paper">
+                  <Link href={`/services/${s.slug}`} className="transition-colors hover:text-accent">
                     {s.name}
                   </Link>
                 </li>
@@ -71,7 +71,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
               {siteLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition-colors hover:text-paper">
+                  <Link href={l.href} className="transition-colors hover:text-accent">
                     {l.label}
                   </Link>
                 </li>

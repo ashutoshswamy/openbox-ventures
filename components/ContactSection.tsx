@@ -63,7 +63,7 @@ export function ContactSection() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <a
                   href="#brief"
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
                 >
                   Send a brief
                   <ArrowDown className="h-4 w-4" strokeWidth={1.6} />
@@ -130,7 +130,7 @@ export function ContactSection() {
           <ScrollReveal delay={0.1}>
             {sent ? (
               <div className="flex min-h-96 flex-col items-center justify-center rounded-panel border border-line text-center">
-                <Check className="h-8 w-8 text-paper" strokeWidth={1.4} />
+                <Check className="h-8 w-8 text-accent" strokeWidth={1.4} />
                 <p className="mt-6 font-display text-display-md">Thanks — we&apos;ll be in touch.</p>
                 {/* form is not yet wired to a backend/CRM */}
                 <p className="mt-2 text-body-sm text-paper/60">We&apos;ll follow up within one business day.</p>
@@ -150,7 +150,7 @@ export function ContactSection() {
                   ref={magneticBtn}
                   type="submit"
                   disabled={submitting}
-                  className="relative block h-14 w-full overflow-hidden rounded-panel bg-paper font-body text-body-sm font-medium text-ink"
+                  className="relative block h-14 w-full overflow-hidden rounded-panel bg-accent font-body text-body-sm font-medium text-ink"
                 >
                   <span ref={btnDefaultRef} className="absolute inset-0 flex items-center justify-center">
                     Send Brief

@@ -21,7 +21,7 @@ export default function NotFound() {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/"
-              className="inline-flex h-14 items-center justify-center rounded-panel bg-paper px-7 text-body-sm font-medium text-ink"
+              className="inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
             >
               Back to home
             </Link>

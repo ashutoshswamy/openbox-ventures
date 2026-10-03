@@ -84,7 +84,7 @@ function OfficeColumn({ office, className }: { office: (typeof offices)[number];
           <p className="truncate font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55">{office.country}</p>
         </div>
         {hq && (
-          <span className="rounded-full bg-paper px-2.5 py-1 font-mono text-utility-xs uppercase tracking-[0.12em] text-ink">
+          <span className="rounded-full bg-accent px-2.5 py-1 font-mono text-utility-xs uppercase tracking-[0.12em] text-ink">
             HQ
           </span>
         )}

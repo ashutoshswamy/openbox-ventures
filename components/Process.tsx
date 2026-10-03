@@ -95,7 +95,7 @@ export function Process() {
                   {processSteps.map((s, i) => (
                     <span
                       key={s.title}
-                      className={`h-0.5 flex-1 rounded-full transition-colors duration-300 ${i <= active ? "bg-paper" : "bg-paper/15"}`}
+                      className={`h-0.5 flex-1 rounded-full transition-colors duration-300 ${i <= active ? "bg-accent" : "bg-paper/15"}`}
                     />
                   ))}
                 </div>
