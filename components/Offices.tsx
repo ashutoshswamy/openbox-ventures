@@ -78,15 +78,13 @@ function OfficeColumn({ office, className }: { office: (typeof offices)[number];
     <div className={`group flex min-w-0 flex-col ${className}`}>
       <div className="flex h-7 items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
-          <svg viewBox="0 0 60 40" className="h-[18px] w-[27px] shrink-0 rounded-[2px] border border-line" aria-hidden>
+          <svg viewBox="0 0 60 40" className="h-[18px] w-[27px] shrink-0 border border-line" aria-hidden>
             {flags[office.country]}
           </svg>
-          <p className="truncate font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55">{office.country}</p>
+          <p className="truncate text-body-sm font-medium text-paper/60">{office.country}</p>
         </div>
         {hq && (
-          <span className="rounded-full bg-accent px-2.5 py-1 font-mono text-utility-xs uppercase tracking-[0.12em] text-ink">
-            HQ
-          </span>
+          <span className="bg-accent px-2 py-0.5 text-utility-xs font-semibold text-ink">HQ</span>
         )}
       </div>
 

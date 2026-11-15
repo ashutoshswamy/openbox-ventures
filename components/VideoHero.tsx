@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { gsap } from "@/lib/gsap";
-import { company } from "@/lib/data";
+import { LinkButton } from "./Button";
 
 // Intro plays once per full page load; client-side navigations back to "/" skip it.
 let introPlayed = false;
@@ -46,7 +45,7 @@ export function VideoHero() {
           left: r.left,
           width: r.width,
           height: r.height,
-          borderRadius: 12,
+          borderRadius: 0,
           duration: 1.1,
           ease: "power3.inOut",
         },
@@ -72,19 +71,31 @@ export function VideoHero() {
 
   const shown = phase !== "playing";
 
-  return (
-    <section className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 pb-16 pt-32 md:px-10 md:pb-24">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.10), transparent 60%), radial-gradient(100% 60% at 90% 100%, rgba(255,255,255,0.06), transparent 55%), var(--color-ink)",
-        }}
-      />
+  // pointer parallax: values live outside React state, so moving the mouse never re-renders the hero
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const px = useSpring(mx, { stiffness: 80, damping: 20 });
+  const py = useSpring(my, { stiffness: 80, damping: 20 });
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (reduced || e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width - 0.5) * -28);
+    my.set(((e.clientY - r.top) / r.height - 0.5) * -20);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
 
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
+  return (
+    <section
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      className="relative flex min-h-[calc(100svh-68px)] flex-col justify-center overflow-hidden px-6 pb-14 pt-12 md:px-10 md:pb-16 md:pt-14"
+    >
+      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:gap-6">
         <motion.div
-          className="relative"
+          className="relative z-10 min-w-0"
           initial="hidden"
           animate={shown ? "show" : "hidden"}
           variants={{
@@ -92,71 +103,66 @@ export function VideoHero() {
             show: { transition: { staggerChildren: 0.12 } },
           }}
         >
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-            className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60"
-          >
-            {company.tagline}
-          </motion.p>
           <motion.h1
             variants={{
               hidden: { opacity: 0, y: 24 },
               show: { opacity: 1, y: 0, transition: { duration: 0.8 } },
             }}
-            className="mt-6 max-w-2xl font-display text-[clamp(40px,5.6vw,80px)] leading-[0.98]"
+            className="font-display text-[clamp(46px,5.8vw,92px)] leading-[0.92]"
           >
-            Every service. One team.
+            Every service.
+            <br />
+            <span className="text-accent">One team.</span>
           </motion.h1>
           <motion.p
             variants={{
               hidden: { opacity: 0, y: 16 },
               show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
             }}
-            className="mt-6 max-w-lg text-body-lg text-paper/75"
+            className="mt-7 max-w-sm text-body-lg text-paper/75"
           >
-            Logistics, marketing, events, technology, e-commerce, content,
-            photography and advertising - every service line under one
-            accountable team, so you brief once and we deliver.
+            Logistics, marketing, events, tech and more, run by one accountable team. Brief us once.
           </motion.p>
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 12 },
               show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
             }}
-            className="mt-10 flex flex-wrap gap-4"
+            className="mt-9 flex flex-wrap gap-4"
           >
-            <Link
-              href="/services"
-              className="inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
-            >
-              Explore Services
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex h-14 items-center justify-center rounded-panel border border-paper/30 px-7 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
-            >
-              Start a Project
-            </Link>
+            <LinkButton href="/contact">Start a project</LinkButton>
+            <LinkButton href="/services" variant="outline">
+              Explore services
+            </LinkButton>
           </motion.div>
         </motion.div>
 
+        {/* The hub runs wider than the text column and bleeds toward the right edge on large screens.
+            Outer layer: pointer parallax (motion values, no re-renders). Inner layer: slow idle float. */}
         <motion.div
           ref={targetRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: shown ? 1 : 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: shown ? 1 : 0, scale: shown ? 1 : 0.94 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative aspect-[1698/926] w-full lg:-mr-10 lg:w-[calc(100%+2.5rem)]"
         >
-          <Image
-            src="/hero.png"
-            alt="Open Box Ventures LLP service lines connected around one hub"
-            width={1698}
-            height={926}
-            priority
-            className="h-auto w-full"
-          />
+          <motion.div className="absolute inset-0" style={{ x: px, y: py }}>
+            <motion.div
+              className="absolute inset-0"
+              animate={reduced ? undefined : { y: [0, -10, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* transparent PNG; swap /hero.png for any cut-out or photo */}
+              <Image
+                src="/hero.png"
+                alt="Open Box Ventures LLP service lines connected around one hub"
+                fill
+                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
+                priority
+                className="object-contain"
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -183,9 +189,9 @@ export function VideoHero() {
             ref={skipRef}
             type="button"
             onClick={finish}
-            className="absolute bottom-6 right-6 z-10 font-mono text-utility-xs uppercase tracking-[0.2em] text-paper/60 transition-colors hover:text-paper md:bottom-8 md:right-10"
+            className="absolute bottom-6 right-6 z-10 border border-paper/40 px-4 py-2 text-body-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink md:bottom-8 md:right-10"
           >
-            Skip
+            Skip intro
           </button>
         </div>
       )}

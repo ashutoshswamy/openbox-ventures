@@ -9,10 +9,11 @@ import { ScrollHeadline } from "./ScrollHeadline";
 import { useFloatLabel } from "@/lib/useFloatLabel";
 import { useFieldFocus } from "@/lib/useFieldFocus";
 import { useMagnetic } from "@/lib/useMagnetic";
+import { ButtonLink } from "./Button";
 import { ArrowDown, Check, Mail, MapPin, Phone } from "lucide-react";
 import { company, services } from "@/lib/data";
 
-const fieldLabelClass = "font-mono text-utility-xs uppercase tracking-[0.15em]";
+const fieldLabelClass = "text-body-sm font-medium";
 
 export function ContactSection() {
   const [sent, setSent] = useState(false);
@@ -48,10 +49,7 @@ export function ContactSection() {
       <section id="contact" className="relative flex min-h-svh items-center overflow-hidden px-6 pb-16 pt-32 md:px-10">
         <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="relative z-10">
-            <ScrollReveal>
-              <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Get In Touch</p>
-            </ScrollReveal>
-            <ScrollHeadline as="h1" className="mt-6 font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">
+            <ScrollHeadline as="h1" className="font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">
               Bring us the brief.
             </ScrollHeadline>
             <ScrollReveal delay={0.05}>
@@ -61,38 +59,34 @@ export function ContactSection() {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="mt-10 flex flex-wrap gap-4">
-                <a
-                  href="#brief"
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
-                >
+                <ButtonLink href="#brief">
                   Send a brief
-                  <ArrowDown className="h-4 w-4" strokeWidth={1.6} />
-                </a>
-                <a
-                  href={`mailto:${company.email}`}
-                  className="inline-flex h-14 items-center justify-center rounded-panel border border-paper/30 px-7 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
-                >
+                  <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
+                </ButtonLink>
+                <ButtonLink href={`mailto:${company.email}`} variant="outline">
                   {company.email}
-                </a>
+                </ButtonLink>
               </div>
             </ScrollReveal>
           </div>
 
           <ScrollReveal delay={0.1}>
-            <Image
-              src="/contact.png"
-              alt="A project brief form connected to offices in India, USA, Canada and the UAE"
-              width={1536}
-              height={1024}
-              priority
-              className="h-auto w-full scale-110 mix-blend-screen [mask-image:radial-gradient(ellipse_68%_68%_at_50%_50%,#000_55%,transparent_100%)] lg:scale-125"
-            />
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src="/contact.png"
+                alt="A project brief form connected to offices in India, USA, Canada and the UAE"
+                fill
+                priority
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-contain"
+              />
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
       <section id="brief" className="border-t border-line px-6 py-24 md:px-10 md:py-32">
-        <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
           <div>
             <ScrollHeadline className="font-display text-display-lg leading-[1.05]">Project brief</ScrollHeadline>
             <ScrollReveal delay={0.05}>
@@ -150,10 +144,10 @@ export function ContactSection() {
                   ref={magneticBtn}
                   type="submit"
                   disabled={submitting}
-                  className="relative block h-14 w-full overflow-hidden rounded-panel bg-accent font-body text-body-sm font-medium text-ink"
+                  className="relative block h-14 w-full overflow-hidden bg-accent font-body text-body-sm font-semibold text-ink transition-colors hover:bg-paper"
                 >
                   <span ref={btnDefaultRef} className="absolute inset-0 flex items-center justify-center">
-                    Send Brief
+                    Send brief
                   </span>
                   <span ref={btnSentRef} className="absolute inset-0 flex items-center justify-center gap-2 opacity-0">
                     <Check className="h-4 w-4" strokeWidth={1.4} />

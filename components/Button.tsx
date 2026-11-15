@@ -1,33 +1,63 @@
-import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type ReactNode } from "react";
+import Link from "next/link";
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 
-/** One button look, used everywhere - sharp-cornered panel radius, two variants. */
-const base = "inline-flex h-14 items-center justify-center gap-2 rounded-panel px-7 text-body-sm font-medium transition-colors";
+/** One button look, used everywhere: sharp corners, one height. Variants only change colour. */
+const base =
+  "inline-flex h-14 items-center justify-center gap-2 px-7 text-body-sm font-semibold transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.98]";
 
-const variants = {
-  solid: "bg-accent text-ink",
-  outline: "border border-paper/30 text-paper hover:border-accent hover:bg-accent hover:text-ink",
+export const variants = {
+  /** primary: orange on black pages */
+  accent: "bg-accent text-ink hover:bg-paper",
+  /** on the orange block */
+  ink: "bg-ink text-paper hover:bg-paper hover:text-ink",
+  /** on the white band */
+  inkSolid: "bg-ink text-paper hover:bg-accent hover:text-ink",
+  outline: "border border-paper/35 text-paper hover:border-paper hover:bg-paper hover:text-ink",
+  outlineInk: "border border-ink/45 text-ink hover:bg-ink hover:text-paper",
 } as const;
 
-type Variant = keyof typeof variants;
+export type Variant = keyof typeof variants;
 
-export const ButtonLink = forwardRef<
-  HTMLAnchorElement,
-  { variant?: Variant; className?: string; children: ReactNode } & AnchorHTMLAttributes<HTMLAnchorElement>
->(function ButtonLink({ variant = "solid", className = "", children, ...props }, ref) {
+export function LinkButton({
+  href,
+  variant = "accent",
+  className = "",
+  children,
+  ...props
+}: {
+  href: string;
+  variant?: Variant;
+  className?: string;
+  children: ReactNode;
+} & Omit<React.ComponentProps<typeof Link>, "href" | "className" | "children">) {
   return (
-    <a ref={ref} className={`${base} ${variants[variant]} ${className}`} {...props}>
+    <Link href={href} className={`${base} ${variants[variant]} ${className}`} {...props}>
       {children}
-    </a>
+    </Link>
   );
-});
+}
 
 export const Button = forwardRef<
   HTMLButtonElement,
   { variant?: Variant; className?: string; children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>
->(function Button({ variant = "solid", className = "", children, ...props }, ref) {
+>(function Button({ variant = "accent", className = "", children, ...props }, ref) {
   return (
     <button ref={ref} className={`${base} ${variants[variant]} ${className}`} {...props}>
       {children}
     </button>
   );
 });
+
+/** Plain anchor (mailto:, #hash) with the same look; use LinkButton for routes. */
+export function ButtonLink({
+  variant = "accent",
+  className = "",
+  children,
+  ...props
+}: { variant?: Variant; className?: string; children: ReactNode } & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  return (
+    <a className={`${base} ${variants[variant]} ${className}`} {...props}>
+      {children}
+    </a>
+  );
+}

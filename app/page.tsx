@@ -1,4 +1,5 @@
 import { VideoHero } from "@/components/VideoHero";
+import { ServicesIndex } from "@/components/ServicesIndex";
 import { About } from "@/components/About";
 import { WhyUs } from "@/components/WhyUs";
 import { Process } from "@/components/Process";
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <>
       <VideoHero />
+      <ServicesIndex />
       <About />
       <WhyUs />
       <Process />

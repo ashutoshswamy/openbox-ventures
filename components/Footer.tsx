@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SocialIcon } from "react-social-icons";
-import { services, company, offices, socials } from "@/lib/data";
+import { services, company, socials } from "@/lib/data";
 import { Offices } from "./Offices";
 
 const siteLinks = [
@@ -11,45 +10,41 @@ const siteLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const labelClass = "font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/50";
+const labelClass = "text-body-sm font-semibold text-paper";
 
 export function Footer() {
-  const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line px-6 pb-10 pt-20 md:px-10">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col gap-8 border-b border-line pb-16 md:flex-row md:items-end md:justify-between">
-          <p className="max-w-2xl font-display text-display-lg leading-[1.05]">Have a brief? Let&apos;s talk.</p>
-          <Link
-            href="/contact"
-            className="inline-flex h-14 shrink-0 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
+    <footer className="border-t border-line px-6 pt-20 md:px-10 md:pt-28">
+      <div className="mx-auto max-w-7xl">
+        {/* sign-off: one big address to write to */}
+        <div className="flex flex-col gap-10 pb-16 md:flex-row md:items-end md:justify-between md:pb-24">
+          <div>
+            <p className="text-body-sm font-medium text-accent">Have a brief?</p>
+            <a
+              href={`mailto:${company.email}`}
+              className="mt-4 block break-all font-display text-[clamp(30px,6vw,88px)] leading-[0.98] transition-colors hover:text-accent"
+            >
+              {company.email}
+            </a>
+          </div>
+          <a
+            href={`tel:${company.phone.replace(/\s/g, "")}`}
+            className="text-body-lg text-paper/70 transition-colors hover:text-accent"
           >
-            Start a Project
-          </Link>
+            {company.phone}
+          </a>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-[1.4fr_1fr_0.7fr]">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 border-t border-line py-14 md:grid-cols-[1.2fr_1.4fr_0.7fr_0.7fr]">
           <div className="col-span-2 md:col-span-1">
             <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={64} height={64} className="h-16 w-16" />
             <p className="mt-5 max-w-xs text-body-sm text-paper/60">{company.tagline}</p>
-            <ul className="mt-5 space-y-1 text-body-sm text-paper/70">
-              <li>
-                <a href={`mailto:${company.email}`} className="transition-colors hover:text-accent">
-                  {company.email}
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-accent">
-                  {company.phone}
-                </a>
-              </li>
-            </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <p className={labelClass}>Services</p>
-            <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
+            <ul className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-body-sm text-paper/70 sm:grid-cols-2">
               {services.map((s) => (
                 <li key={s.slug}>
                   <Link href={`/services/${s.slug}`} className="transition-colors hover:text-accent">
@@ -73,37 +68,39 @@ export function Footer() {
             </ul>
           </div>
 
+          <div>
+            <p className={labelClass}>Follow</p>
+            <ul className="mt-4 space-y-2 text-body-sm text-paper/70">
+              {socials.map((s) => (
+                <li key={s.network}>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="capitalize transition-colors hover:text-accent"
+                  >
+                    {s.network === "x" ? "X" : s.network}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-line py-12">
           <p className={labelClass}>Offices</p>
-          <p className="mt-4 max-w-3xl font-display text-display-lg leading-[1.05]">
-            {offices.length} offices. {new Set(offices.map((o) => o.country)).size} countries. {new Set(offices.map((o) => o.timezone)).size} time zones.
-          </p>
-          <div className="mt-12">
+          <div className="mt-8">
             <Offices />
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 border-t border-line pt-8 text-body-sm text-paper/55 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-t border-line py-8 text-body-sm text-paper/55 md:flex-row md:items-center md:justify-between">
           <p>
-            © {company.founded}–{year} {company.legalName}. All rights reserved.
+            © 2026 {company.legalName}. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            {socials.map((s) => (
-              <SocialIcon
-                key={s.network}
-                network={s.network}
-                url={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                bgColor="transparent"
-                fgColor="var(--color-paper)"
-                style={{ height: 44, width: 44 }}
-                className="opacity-60 transition-opacity hover:opacity-100"
-              />
-            ))}
-          </div>
+          <a href="#top" className="transition-colors hover:text-accent">
+            Back to top ↑
+          </a>
         </div>
       </div>
     </footer>

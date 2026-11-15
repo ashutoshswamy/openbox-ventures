@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Open Box Ventures LLP (OBV) theme - see theme.json. Ink + paper, plus one
-     accent used sparingly (elephantdesign-style neon). */
-  --color-ink: #000000; /* Background */
-  --color-paper: #ffffff; /* text / foreground */
-  --color-accent: #92eeff; /* neon accent - CTAs, highlights, active states only */
-  --color-line: rgba(255, 255, 255, 0.14);
+  /* Open Box Ventures LLP (OBV) - black, white, and one signal orange (the
+     colour of a cardboard box tape-seal). Orange is used for the primary
+     action, one full colour block per page and small highlights only. */
+  --color-ink: #0a0a0a; /* background / dark text */
+  --color-paper: #f5f5f3; /* foreground / light text / the white band */
+  --color-accent: #ff5a1f; /* the one accent */
+  --color-line: rgba(245, 245, 243, 0.16);
+  --focus: var(--color-accent);
 }
 
 @theme inline {
@@ -16,26 +18,30 @@
   --color-line: var(--color-line);
 
   /* Typography roles - see typography.json */
-  --font-display: var(--font-dm-sans);
-  --font-body: var(--font-dm-sans);
-  --font-mono: var(--font-dm-sans);
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-geist);
+  --font-mono: var(--font-geist);
 
-  --text-display-xl: clamp(44px, 8vw, 96px);
-  --text-display-lg: clamp(30px, 5vw, 52px);
-  --text-display-md: 28px;
+  --text-display-xl: clamp(44px, 7vw, 104px);
+  --text-display-lg: clamp(32px, 5vw, 64px);
+  --text-display-md: clamp(22px, 2.2vw, 30px);
 
   --text-body-lg: 19px;
   --text-body-base: 16px;
   --text-body-sm: 14px;
 
   --text-utility-lg: 16px;
-  --text-utility-base: 13px;
-  --text-utility-sm: 12px;
-  --text-utility-xs: 11px;
+  --text-utility-base: 14px;
+  --text-utility-sm: 13px;
+  --text-utility-xs: 12px;
 
-  /* near-sharp corners for stage/panel treatments - deliberately not the
-     rounded-2xl used on card grids elsewhere */
-  --radius-panel: 4px;
+  /* one corner system: sharp. Everything is a hard edge except round icon buttons. */
+  --radius-panel: 0px;
+}
+
+html,
+body {
+  overflow-x: clip;
 }
 
 html {
@@ -61,11 +67,30 @@ body {
   color: var(--color-paper);
   font-family: var(--font-body), sans-serif;
   font-size: var(--text-body-base);
+  line-height: 1.55;
 }
 
 ::selection {
   background: var(--color-accent);
   color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* The one deliberate colour change per page: a white band and an orange block.
+   Both flip the local focus colour so rings stay visible. */
+.on-paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  --focus: var(--color-ink);
+}
+.on-accent {
+  background: var(--color-accent);
+  color: var(--color-ink);
+  --focus: var(--color-ink);
 }
 
 /* form controls don't inherit sizing from utility classes reliably across
@@ -89,7 +114,8 @@ select {
 
 .font-display {
   font-family: var(--font-display), sans-serif;
-  text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  overflow-wrap: break-word;
+  min-width: 0;
 }

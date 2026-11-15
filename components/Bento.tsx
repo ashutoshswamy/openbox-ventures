@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 /** Shared bits for the Services/Industries bento modules: illustrations, the
- * prompt cell, and the display-font override (bold DM Sans without the forced-uppercase `.font-display` transform). */
+ * prompt cell, and the display-font style for cell titles. */
 
-export const bentoTitleStyle = { fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em" } as const;
+export const bentoTitleStyle = { fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.03em" } as const;
 
-/** Illustration file (in /public/services) per service slug. */
+/** Illustration file (in /public/services) per service slug. Replace the PNGs in place to change the art. */
 export const serviceImages: Record<string, string> = {
   "logistics-supply-chain": "logistics",
   "marketing-branding": "marketing",
@@ -18,19 +18,21 @@ export const serviceImages: Record<string, string> = {
   advertising: "advertising",
 };
 
-/** Illustrated "ask" cell used by the Services bento. */
+/** The "ask" cell used by the Services bento: a prompt that leads to the brief form. */
 export function PromptCell({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/contact"
-      className={`group relative flex flex-col justify-between gap-10 overflow-hidden px-7 py-10 transition-colors hover:bg-paper/[0.03] ${className}`}
+      className={`group flex flex-col justify-between gap-10 px-7 py-10 transition-colors hover:bg-paper/[0.04] ${className}`}
     >
-      <span className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full border border-paper/25" aria-hidden />
-      <span className="pointer-events-none absolute right-10 bottom-8 h-2 w-2 rounded-full bg-accent" aria-hidden />
-      <p className="max-w-xs text-body-base text-paper/60">Pick the discipline, or hand us the whole brief.</p>
-      <span className="flex h-14 w-full max-w-sm items-center gap-3 rounded-panel border border-line px-5 text-body-sm text-paper/50 transition-colors group-hover:border-paper/50">
-        <Search className="h-4 w-4 shrink-0" strokeWidth={1.6} />
+      <p className="max-w-sm font-display text-[clamp(26px,3vw,40px)] leading-[1.02]" style={bentoTitleStyle}>
+        Pick a discipline, or hand us the whole brief.
+      </p>
+      <span className="flex h-14 w-full max-w-md items-center justify-between gap-3 border border-paper/40 pl-5 text-body-sm text-paper/70 transition-colors group-hover:border-accent">
         What are you building?
+        <span className="flex h-full w-14 items-center justify-center bg-accent text-ink">
+          <ArrowRight className="h-5 w-5" strokeWidth={2} />
+        </span>
       </span>
     </Link>
   );

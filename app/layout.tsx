@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { MotionProvider } from "@/components/MotionProvider";
 import { company, offices, services, socials } from "@/lib/data";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+});
+
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 
@@ -76,13 +82,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd).replace(/</g, "\\u003c") }}
         />
+        {/* headlines start hidden for their reveal; never leave them hidden without scripting */}
+        <noscript>
+          <style>{`[style*="opacity: 0"]{opacity:1!important}`}</style>
+        </noscript>
         <MotionProvider>
           <SiteHeader />
           <main className="flex-1">{children}</main>

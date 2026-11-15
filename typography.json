@@ -3,39 +3,26 @@
   "description": "Typography system for Open Box Ventures LLP (OBV)",
   "roles": {
     "display": {
-      "fontFamily": "DM Sans",
+      "fontFamily": "Bricolage Grotesque",
       "fallback": "sans-serif",
-      "weight": 400,
-      "textTransform": "uppercase",
-      "usage": "Headlines / section titles",
-      "scale": {
-        "xl": "clamp(44px, 8vw, 96px)",
-        "lg": "clamp(30px, 5vw, 52px)",
-        "md": "28px"
-      }
+      "weights": [600, 700, 800],
+      "textTransform": "none",
+      "usage": "Headlines / section titles, sentence case, tight tracking",
+      "scale": { "xl": "clamp(44px, 7vw, 104px)", "lg": "clamp(32px, 5vw, 64px)", "md": "clamp(22px, 2.2vw, 30px)" }
     },
     "body": {
-      "fontFamily": "DM Sans",
+      "fontFamily": "Geist",
       "fallback": "sans-serif",
-      "weights": [400, 500, 600, 700],
+      "weights": [400, 500, 600],
       "usage": "Paragraphs / general copy",
-      "scale": {
-        "lg": "19px",
-        "base": "16px",
-        "sm": "14px"
-      }
+      "scale": { "lg": "19px", "base": "16px", "sm": "14px" }
     },
     "utility": {
-      "fontFamily": "DM Sans",
-      "fallback": "monospace",
+      "fontFamily": "Geist",
+      "fallback": "sans-serif",
       "weights": [400, 500, 600],
-      "usage": "Labels, tags, data, timestamps",
-      "scale": {
-        "lg": "16px",
-        "base": "13px",
-        "sm": "12px",
-        "xs": "11px"
-      }
+      "usage": "Labels, captions, data. Sentence case, never tracked capitals",
+      "scale": { "lg": "16px", "base": "14px", "sm": "13px", "xs": "12px" }
     }
   }
 }

@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { services } from "@/lib/data";
+import { LinkButton } from "./Button";
 
 const links = [
   { href: "/about", label: "About" },
@@ -16,17 +17,9 @@ const links = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false); // mobile menu
   const [servicesOpen, setServicesOpen] = useState(false); // desktop dropdown
   const [mobileServices, setMobileServices] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -43,32 +36,38 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-4 z-50 px-4 md:px-6">
-        <nav
-          className={`pointer-events-auto mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-line px-5 py-3 backdrop-blur-xl transition-colors duration-500 md:px-8 ${
-            scrolled || open ? "bg-ink/90" : "bg-ink/50"
-          }`}
-        >
-          <Link href="/" aria-label="Open Box Ventures LLP - home" className="block">
-            <Image src="/logo_nobg.png" alt="Open Box Ventures LLP" width={48} height={48} priority className="h-12 w-12" />
+      <header className="sticky top-0 z-50 border-b border-line bg-ink/85 backdrop-blur-xl">
+        <nav className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-6 px-6 md:px-10">
+          <Link href="/" aria-label="Open Box Ventures LLP - home" className="flex items-center gap-3">
+            <Image src="/logo_nobg.png" alt="" width={40} height={40} priority className="h-10 w-10" />
+            <span className="hidden font-display text-[17px] leading-none sm:block">Open Box Ventures</span>
           </Link>
 
-          <ul className="hidden items-center gap-8 text-body-sm md:flex">
+          <ul className="hidden items-center gap-9 text-body-sm font-medium md:flex">
             {links.map((l) => (
               <li
                 key={l.href}
                 className="relative"
                 onMouseEnter={l.services ? () => setServicesOpen(true) : undefined}
                 onMouseLeave={l.services ? () => setServicesOpen(false) : undefined}
+                onFocus={l.services ? () => setServicesOpen(true) : undefined}
+                onBlur={
+                  l.services
+                    ? (e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget)) setServicesOpen(false);
+                      }
+                    : undefined
+                }
               >
                 <Link
                   href={l.href}
-                  className={`inline-flex items-center gap-1 transition-colors hover:text-accent ${
-                    isActive(l.href) ? "text-paper" : "text-paper/80"
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  className={`inline-flex items-center gap-1 border-b-2 py-1 transition-colors hover:text-accent ${
+                    isActive(l.href) ? "border-accent text-paper" : "border-transparent text-paper/75"
                   }`}
                 >
                   {l.label}
-                  {l.services && <ChevronDown className="h-3.5 w-3.5" strokeWidth={1.6} />}
+                  {l.services && <ChevronDown className="h-3.5 w-3.5" strokeWidth={1.8} />}
                 </Link>
 
                 {l.services && (
@@ -79,23 +78,24 @@ export function SiteHeader() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.18 }}
-                        className="absolute left-1/2 top-full w-72 -translate-x-1/2 pt-4"
+                        className="absolute left-1/2 top-full w-80 -translate-x-1/2 pt-4"
                       >
-                        <div className="overflow-hidden rounded-panel border border-line bg-ink/95 p-2 backdrop-blur">
+                        <div className="border border-line bg-ink p-2">
                           {services.map((s) => (
                             <Link
                               key={s.slug}
                               href={`/services/${s.slug}`}
-                              className="block rounded-[3px] px-3 py-2 text-body-sm text-paper/75 transition-colors hover:bg-paper/8 hover:text-accent"
+                              className="block px-3 py-2.5 text-body-sm text-paper/75 transition-colors hover:bg-accent hover:text-ink"
                             >
                               {s.name}
                             </Link>
                           ))}
                           <Link
                             href="/services"
-                            className="mt-1 block border-t border-line px-3 pt-3 pb-1 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-accent"
+                            className="mt-1 flex items-center justify-between border-t border-line px-3 pb-2 pt-3 text-body-sm font-semibold text-paper transition-colors hover:text-accent"
                           >
-                            All services →
+                            All services
+                            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                           </Link>
                         </div>
                       </motion.div>
@@ -106,12 +106,9 @@ export function SiteHeader() {
             ))}
           </ul>
 
-          <Link
-            href="/contact"
-            className="hidden h-11 items-center justify-center rounded-panel border border-paper/30 px-5 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink md:inline-flex"
-          >
-            Start a Project
-          </Link>
+          <LinkButton href="/contact" className="hidden !h-11 !px-5 md:inline-flex">
+            Start a project
+          </LinkButton>
 
           <button
             aria-label="Toggle menu"
@@ -119,9 +116,9 @@ export function SiteHeader() {
             onClick={() => setOpen((o) => !o)}
             className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 md:hidden"
           >
-            <span className={`h-px w-6 bg-paper transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`h-px w-6 bg-paper transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`h-px w-6 bg-paper transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span className={`h-0.5 w-6 bg-paper transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
+            <span className={`h-0.5 w-6 bg-paper transition-opacity ${open ? "opacity-0" : ""}`} />
+            <span className={`h-0.5 w-6 bg-paper transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
           </button>
         </nav>
       </header>
@@ -132,40 +129,37 @@ export function SiteHeader() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col gap-2 overflow-y-auto bg-ink px-6 pb-16 pt-24 md:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink px-6 pb-16 pt-24 md:hidden"
           >
             {links.map((l) =>
               l.services ? (
-                <div key={l.href} className="border-b border-line py-3">
+                <div key={l.href} className="border-b border-line py-4">
                   <button
                     onClick={() => setMobileServices((v) => !v)}
-                    className="flex w-full items-center justify-between font-display text-display-md"
+                    aria-expanded={mobileServices}
+                    className="flex w-full items-center justify-between font-display text-[32px] leading-none"
                   >
                     Services
                     <ChevronDown
-                      className={`h-5 w-5 transition-transform ${mobileServices ? "rotate-180" : ""}`}
+                      className={`h-6 w-6 transition-transform ${mobileServices ? "rotate-180" : ""}`}
                       strokeWidth={1.6}
                     />
                   </button>
                   {mobileServices && (
-                    <div className="mt-3 flex flex-col gap-1 pl-1">
+                    <div className="mt-4 flex flex-col gap-1">
                       {services.map((s) => (
                         <Link
                           key={s.slug}
                           href={`/services/${s.slug}`}
                           onClick={closeMobile}
-                          className="py-1.5 text-body-base text-paper/75"
+                          className="py-2 text-body-base text-paper/75"
                         >
                           {s.name}
                         </Link>
                       ))}
-                      <Link
-                        href="/services"
-                        onClick={closeMobile}
-                        className="py-1.5 font-mono text-utility-xs uppercase tracking-[0.15em] text-paper/55"
-                      >
-                        All services →
+                      <Link href="/services" onClick={closeMobile} className="py-2 text-body-base font-semibold text-accent">
+                        All services
                       </Link>
                     </div>
                   )}
@@ -175,19 +169,15 @@ export function SiteHeader() {
                   key={l.href}
                   href={l.href}
                   onClick={closeMobile}
-                  className="border-b border-line py-4 font-display text-display-md"
+                  className="border-b border-line py-4 font-display text-[32px] leading-none"
                 >
                   {l.label}
                 </Link>
               ),
             )}
-            <Link
-              href="/contact"
-              onClick={closeMobile}
-              className="mt-6 inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
-            >
-              Start a Project
-            </Link>
+            <LinkButton href="/contact" onClick={closeMobile} className="mt-8">
+              Start a project
+            </LinkButton>
           </motion.div>
         )}
       </AnimatePresence>

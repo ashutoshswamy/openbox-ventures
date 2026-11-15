@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
 import { ScrollHeadline } from "./ScrollHeadline";
 import { ScrollReveal } from "./ScrollReveal";
+import { LinkButton } from "./Button";
 
+/** The orange block: the one full-colour moment at the end of each page. */
 export function CTA({
   headline = "One team for the whole brief.",
   body = "Tell us what you're trying to do. We'll tell you how we'd do it.",
@@ -11,40 +11,23 @@ export function CTA({
   body?: string;
 }) {
   return (
-    <section className="overflow-hidden border-t border-line px-6 py-20 md:px-10 md:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
-        <div>
-          <ScrollHeadline className="max-w-3xl font-display text-display-lg leading-tight">
-            {headline}
-          </ScrollHeadline>
-          <ScrollReveal delay={0.05}>
-            <p className="mt-6 max-w-xl text-body-lg text-paper/70">{body}</p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex h-14 items-center justify-center rounded-panel bg-accent px-7 text-body-sm font-medium text-ink"
-              >
-                Start a Project
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex h-14 items-center justify-center rounded-panel border border-paper/30 px-7 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
-              >
-                Browse Services
-              </Link>
+    <section className="on-accent overflow-hidden px-6 py-24 md:px-10 md:py-36">
+      <div className="mx-auto max-w-7xl">
+        <ScrollHeadline className="max-w-5xl font-display text-[clamp(42px,7.4vw,120px)] leading-[0.92]">
+          {headline}
+        </ScrollHeadline>
+        <ScrollReveal delay={0.05}>
+          <div className="mt-12 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-lg text-body-lg text-ink/80">{body}</p>
+            <div className="flex flex-wrap gap-4">
+              <LinkButton href="/contact" variant="ink">
+                Start a project
+              </LinkButton>
+              <LinkButton href="/services" variant="outlineInk">
+                Browse services
+              </LinkButton>
             </div>
-          </ScrollReveal>
-        </div>
-        <ScrollReveal delay={0.1}>
-          <Image
-            src="/oneteam.png"
-            alt="Our service lines connected around one team"
-            width={1699}
-            height={926}
-            className="h-auto w-full lg:-ml-24 lg:w-[125%] lg:max-w-none"
-          />
+          </div>
         </ScrollReveal>
       </div>
     </section>

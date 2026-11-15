@@ -1,50 +1,61 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ScrollReveal } from "./ScrollReveal";
 import { ScrollHeadline } from "./ScrollHeadline";
-import { company } from "@/lib/data";
+import { StatCounter } from "./StatCounter";
+import { LinkButton } from "./Button";
+import { company, offices, stats } from "@/lib/data";
+
+const timeZones = new Set(offices.map((o) => o.timezone)).size;
+const figures = [...stats.map((s) => ({ value: s.value, suffix: s.suffix, label: s.label })), { value: timeZones, suffix: "", label: "Time zones" }];
 
 export function About() {
   return (
-    <section className="overflow-hidden border-t border-line px-6 py-24 md:px-10 md:py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+    <section className="overflow-hidden px-6 py-24 md:px-10 md:py-36">
+      <div className="mx-auto max-w-7xl">
+        <ScrollHeadline className="max-w-5xl font-display text-[clamp(34px,5.6vw,84px)] leading-[0.98]">
+          Businesses shouldn&apos;t need a dozen providers to bring one idea to life.
+        </ScrollHeadline>
+
+        <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-2 lg:items-center lg:gap-20">
+          <ScrollReveal>
+            {/* transparent PNG; any 4:3 cut-out or photo works */}
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src="/whoweare.png"
+                alt="Open Box Ventures LLP offices across India, USA, Canada and UAE: 6 offices across 4 countries"
+                fill
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="object-contain"
+              />
+            </div>
+          </ScrollReveal>
+
           <div>
             <ScrollReveal>
-              <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">Who We Are</p>
+              <p className="max-w-xl text-body-lg text-paper/80">{company.about[0]}</p>
             </ScrollReveal>
-            <ScrollHeadline className="mt-6 font-display text-display-lg leading-[1.05]">
-              Businesses shouldn&apos;t need a dozen providers to bring one idea to life.
-            </ScrollHeadline>
-          </div>
-
-          <div className="lg:pt-10">
+            <ScrollReveal delay={0.08}>
+              <p className="mt-5 max-w-xl text-body-base text-paper/60">{company.about[1]}</p>
+            </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <p className="text-body-lg text-paper/80">{company.about[0]}</p>
+              <dl className="mt-10 grid grid-cols-3 gap-4">
+                {figures.map((f) => (
+                  <div key={f.label} className="border-t-2 border-accent pt-4">
+                    <dd className="font-display text-[clamp(40px,5vw,72px)] leading-none text-paper">
+                      <StatCounter value={f.value} suffix={f.suffix} />
+                    </dd>
+                    <dt className="mt-3 text-body-sm text-paper/60">{f.label}</dt>
+                  </div>
+                ))}
+              </dl>
             </ScrollReveal>
-            <ScrollReveal delay={0.15}>
-              <p className="mt-5 text-body-base text-paper/60">{company.about[1]}</p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <Link
-                href="/about"
-                className="mt-8 inline-flex h-12 items-center justify-center rounded-panel border border-paper/30 px-6 text-body-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
-              >
-                More about Open Box Ventures LLP →
-              </Link>
+            <ScrollReveal delay={0.12}>
+              <LinkButton href="/about" variant="outline" className="mt-10">
+                About us
+              </LinkButton>
             </ScrollReveal>
           </div>
         </div>
-
-        <ScrollReveal delay={0.1} className="mt-16 md:mt-20">
-          <Image
-            src="/whoweare.png"
-            alt="Open Box Ventures LLP offices across India, USA, Canada and UAE: 6 offices across 4 countries"
-            width={1536}
-            height={1024}
-            className="h-auto w-full mix-blend-screen [mask-image:radial-gradient(ellipse_75%_75%_at_50%_50%,#000_55%,transparent_100%)]"
-          />
-        </ScrollReveal>
       </div>
     </section>
   );

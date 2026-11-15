@@ -11,11 +11,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="relative flex min-h-screen flex-col pt-28 md:pt-32">
-        {/* ponytail: bento has no visible headline; sr-only h1 gives crawlers + screen readers one */}
-        <h1 className="sr-only">Services by Open Box Ventures LLP</h1>
-        <ServicesBento />
-      </section>
+      <ServicesBento />
 
       <CTA />
     </>

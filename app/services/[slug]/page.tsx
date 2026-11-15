@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRight, Check } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { CTA } from "@/components/CTA";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -28,35 +29,36 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
   return (
     <>
-      <PageHeader eyebrow="Service" title={service.name} intro={service.tagline} />
+      <PageHeader title={service.name} intro={service.tagline} />
 
-      <section className="mx-auto max-w-6xl px-6 py-24 md:px-10 md:py-32">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+      <section className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-20">
           <ScrollReveal>
-            <p className="text-body-lg text-paper/75">{service.summary}</p>
-            <p className="mt-6 font-mono text-utility-sm uppercase tracking-[0.15em] text-paper/70">
+            <p className="text-body-lg text-paper/80">{service.summary}</p>
+            <p className="mt-8 border-l-2 border-accent pl-5 font-display text-display-md leading-[1.1]">
               {service.outcome}
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <div className="relative aspect-video w-full overflow-hidden rounded-panel border border-line">
+            {/* swap the image in lib/data.ts; any 4:3 image fits the frame */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden border border-line bg-ink">
               <Image
                 src={service.image}
                 alt={`${service.name} at Open Box Ventures LLP`}
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
+                className="object-contain p-4"
               />
             </div>
           </ScrollReveal>
         </div>
 
-        <div className="mt-20 border-t border-line pt-12">
-          <p className="font-mono text-utility-sm uppercase tracking-[0.25em] text-paper/60">What&apos;s included</p>
-          <ul className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+        <div className="mt-24">
+          <h2 className="font-display text-display-md">What&apos;s included</h2>
+          <ul className="mt-8 grid grid-cols-1 gap-x-12 gap-y-5 sm:grid-cols-2">
             {service.offerings.map((o) => (
-              <li key={o} className="flex gap-3 border-b border-line pb-4 text-body-base text-paper/80">
-                <span className="text-paper/50">-</span>
+              <li key={o} className="flex items-start gap-3 text-body-lg text-paper/85">
+                <Check className="mt-1.5 h-5 w-5 shrink-0 text-accent" strokeWidth={2} />
                 {o}
               </li>
             ))}
@@ -64,17 +66,18 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </div>
       </section>
 
-      <section className="border-t border-line px-6 py-24 md:px-10 md:py-32">
-        <div className="mx-auto max-w-6xl">
-          <ScrollHeadline className="font-display text-display-lg leading-tight">Other services</ScrollHeadline>
-          <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-3 lg:grid-cols-4">
+      <section className="on-paper px-6 py-24 md:px-10 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <ScrollHeadline className="font-display text-display-lg leading-[0.98]">Other services</ScrollHeadline>
+          <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {others.map((s) => (
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="border-t border-line pt-4 text-body-base text-paper/70 transition-colors hover:text-paper"
+                className="flex items-start justify-between gap-3 border border-ink/30 p-5 text-body-base font-semibold transition-colors hover:bg-accent hover:border-accent"
               >
                 {s.name}
+                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />
               </Link>
             ))}
           </div>
