@@ -41,7 +41,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: { card: "summary_large_image", site: "@openboxventures" },
+  twitter: {
+    card: "summary_large_image",
+    site: "@openboxventures",
+    images: ["/og-image.png"],
+  },
+  robots: { index: true, follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -56,6 +61,7 @@ export const metadata: Metadata = {
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${company.url}/#organization`,
   name: company.name,
   legalName: company.legalName,
   url: company.url,
@@ -64,6 +70,13 @@ const orgJsonLd = {
   foundingDate: String(company.founded),
   email: company.email,
   telephone: company.phone,
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    email: company.email,
+    telephone: company.phone,
+    availableLanguage: "English",
+  },
   sameAs: socials.map((s) => s.url),
   address: offices.map((o) => ({
     "@type": "PostalAddress",
@@ -72,6 +85,16 @@ const orgJsonLd = {
     addressCountry: o.country,
   })),
   knowsAbout: services.map((s) => s.name),
+};
+
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${company.url}/#website`,
+  url: company.url,
+  name: company.name,
+  inLanguage: "en",
+  publisher: { "@id": `${company.url}/#organization` },
 };
 
 export default function RootLayout({
@@ -87,7 +110,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-ink text-paper">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([orgJsonLd, siteJsonLd]).replace(/</g, "\\u003c") }}
         />
         {/* headlines start hidden for their reveal; never leave them hidden without scripting */}
         <noscript>

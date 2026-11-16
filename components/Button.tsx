@@ -11,7 +11,7 @@ export const variants = {
   /** on the orange block */
   ink: "bg-ink text-paper hover:bg-paper hover:text-ink",
   /** on the white band */
-  inkSolid: "bg-ink text-paper hover:bg-accent hover:text-ink",
+  inkSolid: "bg-ink text-paper hover:bg-paper/90 hover:text-ink",
   outline: "border border-paper/35 text-paper hover:border-paper hover:bg-paper hover:text-ink",
   outlineInk: "border border-ink/45 text-ink hover:bg-ink hover:text-paper",
 } as const;

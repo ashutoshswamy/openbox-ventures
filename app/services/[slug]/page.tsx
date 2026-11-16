@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { CTA } from "@/components/CTA";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollHeadline } from "@/components/ScrollHeadline";
-import { services } from "@/lib/data";
+import { company, services } from "@/lib/data";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -17,7 +17,11 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
-  return { title: service.name, description: service.summary };
+  return {
+    title: service.name,
+    description: service.summary,
+    openGraph: { title: `${service.name} - ${company.name}`, description: service.summary, url: `/services/${slug}` },
+  };
 }
 
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {
@@ -27,8 +31,39 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
   const others = services.filter((s) => s.slug !== service.slug);
 
+  const url = `${company.url}/services/${slug}`;
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: service.name,
+      description: service.summary,
+      url,
+      serviceType: service.name,
+      provider: { "@id": `${company.url}/#organization` },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: `${service.name} offerings`,
+        itemListElement: service.offerings.map((o) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: o } })),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: company.url },
+        { "@type": "ListItem", position: 2, name: "Services", item: `${company.url}/services` },
+        { "@type": "ListItem", position: 3, name: service.name, item: url },
+      ],
+    },
+  ];
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <PageHeader title={service.name} intro={service.tagline} />
 
       <section className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
@@ -74,7 +109,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="flex items-start justify-between gap-3 border border-ink/30 p-5 text-body-base font-semibold transition-colors hover:bg-accent hover:border-accent"
+                className="flex items-start justify-between gap-3 border border-ink/30 p-5 text-body-base font-semibold transition-colors hover:bg-ink hover:text-paper"
               >
                 {s.name}
                 <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />

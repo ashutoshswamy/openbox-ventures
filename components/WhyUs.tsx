@@ -6,10 +6,10 @@ import { differentiators } from "@/lib/data";
 // same order as `differentiators`
 const images = ["roof", "multidisciplinary", "international", "goals"];
 
-/** Four cells, two rows (4+2, 2+4 columns). Each cell is a different surface: black, orange, white, black. */
+/** Four cells, two rows (4+2, 2+4 columns). Each cell is a different surface: black, black, white, black. */
 const cells = [
   { span: "lg:col-span-4", surface: "border border-line", muted: "text-paper/65", layout: "lg:flex-row" },
-  { span: "lg:col-span-2", surface: "on-accent", muted: "text-ink/75", layout: "" },
+  { span: "lg:col-span-2", surface: "border border-line", muted: "text-paper/65", layout: "" },
   { span: "lg:col-span-2", surface: "on-paper", muted: "text-ink/70", layout: "" },
   { span: "lg:col-span-4", surface: "border border-line", muted: "text-paper/65", layout: "lg:flex-row" },
 ] as const;

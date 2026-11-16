@@ -7,7 +7,8 @@ import { gsap } from "@/lib/gsap";
 import { LinkButton } from "./Button";
 
 // Intro plays once per full page load; client-side navigations back to "/" skip it.
-let introPlayed = false;
+// ponytail: intro disabled for now; set back to false to re-enable (video file kept in /public).
+let introPlayed = true;
 
 export function VideoHero() {
   const reduced = useReducedMotion();

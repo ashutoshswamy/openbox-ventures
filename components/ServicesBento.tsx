@@ -11,11 +11,11 @@ const timeZones = new Set(offices.map((o) => o.timezone)).size;
 
 function StatCell({ value, suffix, label }: { value: number; suffix: string; label: string }) {
   return (
-    <div className="flex flex-1 flex-col justify-center border-ink/25 px-5 py-8 not-last:border-r lg:px-8 lg:py-10">
+    <div className="flex flex-1 flex-col justify-center border-line px-5 py-8 not-last:border-r lg:px-8 lg:py-10">
       <div className="font-display text-[clamp(56px,7vw,112px)] leading-none">
         <StatCounter value={value} suffix={suffix} />
       </div>
-      <p className="mt-3 text-body-base font-medium text-ink/80">{label}</p>
+      <p className="mt-3 text-body-base font-medium text-paper/70">{label}</p>
     </div>
   );
 }
@@ -37,7 +37,7 @@ function ServiceCell({
   return (
     <Link
       href={`/services/${slug}`}
-      className={`group flex flex-col justify-between gap-8 px-6 py-7 transition-colors hover:bg-accent hover:text-ink lg:px-7 lg:py-8 ${
+      className={`group flex flex-col justify-between gap-8 px-6 py-7 transition-colors hover:bg-paper hover:text-ink lg:px-7 lg:py-8 ${
         paper ? "on-paper border-ink/20" : "border-line"
       } ${className}`}
     >
@@ -91,7 +91,7 @@ export function ServicesBento() {
         </div>
       </header>
 
-      <div className="on-accent flex border-b border-ink/25">
+      <div className="flex border-b border-line">
         <div className="mx-auto flex w-full max-w-7xl">
           <StatCell value={stats[0].value} suffix={stats[0].suffix} label="Offices worldwide" />
           <StatCell value={stats[1].value} suffix={stats[1].suffix} label="Countries" />

@@ -10,7 +10,7 @@ function DisciplineCell({ service, flip, paper }: { service: (typeof services)[n
   return (
     <Link
       href={`/services/${service.slug}`}
-      className={`group flex flex-1 flex-col items-start justify-between gap-6 px-7 py-9 transition-colors hover:bg-accent hover:text-ink sm:flex-row sm:items-center sm:gap-8 lg:px-10 lg:py-10 ${
+      className={`group flex min-w-0 flex-1 flex-col items-start justify-between gap-6 px-7 py-9 transition-colors hover:bg-paper hover:text-ink sm:flex-row sm:items-center sm:gap-8 lg:px-10 lg:py-10 ${
         flip ? "sm:flex-row-reverse" : ""
       } ${paper ? "on-paper" : ""}`}
     >

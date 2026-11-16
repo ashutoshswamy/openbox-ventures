@@ -84,9 +84,9 @@ export function ServicesIndex({
 
           <div className="hidden lg:block">
             <div className="sticky top-28">
-              {/* orange block sits behind and offset; the stage is the black panel in front */}
+              {/* offset block sits behind and offset; the stage is the black panel in front */}
               <div className="relative">
-                <span className="absolute inset-0 translate-x-4 translate-y-4 bg-accent" aria-hidden />
+                <span className="absolute inset-0 translate-x-4 translate-y-4 bg-ink/15" aria-hidden />
                 <div className="relative aspect-[4/3] w-full bg-ink">
                   {services.map((s, i) => (
                     <Image

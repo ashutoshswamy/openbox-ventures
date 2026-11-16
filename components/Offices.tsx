@@ -71,21 +71,25 @@ function useLocalClock(timezone: string) {
   return clock;
 }
 
-function OfficeColumn({ office, className }: { office: (typeof offices)[number]; className: string }) {
-  const clock = useLocalClock(office.timezone);
-  const hq = "role" in office;
+type Office = (typeof offices)[number];
+
+// one column per timezone: offices sharing a clock are listed together
+const groups = Object.values(
+  offices.reduce<Record<string, Office[]>>((acc, o) => ((acc[o.timezone] ??= []).push(o), acc), {}),
+);
+
+function OfficeColumn({ group, className }: { group: Office[]; className: string }) {
+  const { country, timezone } = group[0];
+  const clock = useLocalClock(timezone);
   return (
     <div className={`group flex min-w-0 flex-col ${className}`}>
       <div className="flex h-7 items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
           <svg viewBox="0 0 60 40" className="h-[18px] w-[27px] shrink-0 border border-line" aria-hidden>
-            {flags[office.country]}
+            {flags[country]}
           </svg>
-          <p className="truncate text-body-sm font-medium text-paper/60">{office.country}</p>
+          <p className="truncate text-body-sm font-medium text-paper/60">{country}</p>
         </div>
-        {hq && (
-          <span className="bg-accent px-2 py-0.5 text-utility-xs font-semibold text-ink">HQ</span>
-        )}
       </div>
 
       <p
@@ -96,21 +100,32 @@ function OfficeColumn({ office, className }: { office: (typeof offices)[number];
         <span className="ml-1.5 text-utility-sm font-medium tracking-normal text-paper/40">{clock?.period}</span>
       </p>
 
-      <p className="mt-6 truncate font-display text-[clamp(15px,1.25vw,18px)] leading-tight tracking-tight text-paper">{office.city}</p>
-      <p className="mt-1.5 truncate text-body-sm text-paper/50">{office.region.replace(/, (India|USA|Canada)$/, "")}</p>
+      <ul className="mt-6 space-y-3">
+        {group.map((o) => (
+          <li key={o.city} className="min-w-0">
+            <p className="flex items-center gap-2 font-display text-[clamp(15px,1.25vw,18px)] leading-tight tracking-tight text-paper">
+              {"role" in o && (
+                <span className="shrink-0 bg-accent px-1.5 py-0.5 font-body text-utility-xs font-semibold tracking-normal text-ink">HQ</span>
+              )}
+              <span className="truncate">{o.city}</span>
+            </p>
+            <p className="mt-1 truncate text-body-sm text-paper/50">{o.region.replace(/, (India|USA|Canada)$/, "")}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-// hairline dividers only in the single-row (xl) layout; stacked layouts use a top rule on mobile
+// hairline dividers only in the single-row (lg) layout; stacked layouts use a top rule
 const dividerClass = (i: number) =>
-  `border-t border-line pt-6 xl:border-t-0 xl:pt-0 ${i === 0 ? "" : "xl:border-l xl:border-line xl:pl-6"}`;
+  `border-t border-line pt-6 lg:border-t-0 lg:pt-0 ${i === 0 ? "" : "lg:border-l lg:border-line lg:pl-6"}`;
 
 export function Offices() {
   return (
-    <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-3 xl:grid-cols-6">
-      {offices.map((o, i) => (
-        <OfficeColumn key={o.city} office={o} className={dividerClass(i)} />
+    <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+      {groups.map((g, i) => (
+        <OfficeColumn key={g[0].timezone} group={g} className={dividerClass(i)} />
       ))}
     </div>
   );

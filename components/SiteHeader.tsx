@@ -85,7 +85,7 @@ export function SiteHeader() {
                             <Link
                               key={s.slug}
                               href={`/services/${s.slug}`}
-                              className="block px-3 py-2.5 text-body-sm text-paper/75 transition-colors hover:bg-accent hover:text-ink"
+                              className="block px-3 py-2.5 text-body-sm text-paper/75 transition-colors hover:bg-paper hover:text-ink"
                             >
                               {s.name}
                             </Link>

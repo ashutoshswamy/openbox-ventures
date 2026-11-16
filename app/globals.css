@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Open Box Ventures LLP (OBV) - black, white, and one signal orange (the
+  /* Open Box Ventures LLP (OBV) - black, white, and one signal orange used sparingly (the
      colour of a cardboard box tape-seal). Orange is used for the primary
      action, one full colour block per page and small highlights only. */
   --color-ink: #0a0a0a; /* background / dark text */
@@ -80,15 +80,9 @@ body {
   outline-offset: 3px;
 }
 
-/* The one deliberate colour change per page: a white band and an orange block.
-   Both flip the local focus colour so rings stay visible. */
+/* The one deliberate white band per page; flips the local focus colour so rings stay visible. */
 .on-paper {
   background: var(--color-paper);
-  color: var(--color-ink);
-  --focus: var(--color-ink);
-}
-.on-accent {
-  background: var(--color-accent);
   color: var(--color-ink);
   --focus: var(--color-ink);
 }
