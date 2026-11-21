@@ -124,7 +124,7 @@ export function ContactSection() {
           <ScrollReveal delay={0.1}>
             {sent ? (
               <div className="flex min-h-96 flex-col items-center justify-center rounded-panel border border-line text-center">
-                <Check className="h-8 w-8 text-accent" strokeWidth={1.4} />
+                <Check className="h-8 w-8 text-accent-2" strokeWidth={1.4} />
                 <p className="mt-6 font-display text-display-md">Thanks - we&apos;ll be in touch.</p>
                 {/* form is not yet wired to a backend/CRM */}
                 <p className="mt-2 text-body-sm text-paper/60">We&apos;ll follow up within one business day.</p>

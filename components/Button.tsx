@@ -6,8 +6,8 @@ const base =
   "inline-flex h-14 items-center justify-center gap-2 px-7 text-body-sm font-semibold transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.98]";
 
 export const variants = {
-  /** primary: orange on black pages */
-  accent: "bg-accent text-ink hover:bg-paper",
+  /** primary: cerulean on black pages, rose on hover for the third brand color */
+  accent: "bg-accent text-ink hover:bg-accent-2",
   /** on the orange block */
   ink: "bg-ink text-paper hover:bg-paper hover:text-ink",
   /** on the white band */

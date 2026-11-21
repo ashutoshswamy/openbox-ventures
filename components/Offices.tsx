@@ -105,7 +105,7 @@ function OfficeColumn({ group, className }: { group: Office[]; className: string
           <li key={o.city} className="min-w-0">
             <p className="flex items-center gap-2 font-display text-[clamp(15px,1.25vw,18px)] leading-tight tracking-tight text-paper">
               {"role" in o && (
-                <span className="shrink-0 bg-accent px-1.5 py-0.5 font-body text-utility-xs font-semibold tracking-normal text-ink">HQ</span>
+                <span className="shrink-0 bg-accent-2 px-1.5 py-0.5 font-body text-utility-xs font-semibold tracking-normal text-ink">HQ</span>
               )}
               <span className="truncate">{o.city}</span>
             </p>
