@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist } from "next/font/google";
+import { Syne, Geist } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
+import { BottomNav } from "@/components/BottomNav";
+import { PageFx } from "@/components/PageFx";
 import { MotionProvider } from "@/components/MotionProvider";
 import { company, offices, services, socials } from "@/lib/data";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geist = Geist({
@@ -105,7 +106,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${geist.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${syne.variable} ${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper">
         <script
@@ -117,9 +119,10 @@ export default function RootLayout({
           <style>{`[style*="opacity: 0"]{opacity:1!important}`}</style>
         </noscript>
         <MotionProvider>
-          <SiteHeader />
           <main className="flex-1">{children}</main>
           <Footer />
+          <BottomNav />
+          <PageFx />
         </MotionProvider>
       </body>
     </html>

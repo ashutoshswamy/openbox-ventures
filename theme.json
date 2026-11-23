@@ -1,9 +1,9 @@
 {
   "name": "OBV Color Theme",
-  "description": "Black, white and one signal orange. Orange = primary action + one colour block per page.",
+  "description": "Ember theme: night-plum black, warm paper, one ember-orange accent.",
   "colors": {
-    "ink": { "hex": "#0A0A0A", "role": "Background / dark text" },
-    "paper": { "hex": "#F5F5F3", "role": "Text on dark / the white band" },
-    "accent": { "hex": "#FF5A1F", "role": "Primary action, highlights, the one colour block" }
+    "ink": { "hex": "#0B0A10", "role": "Background / dark text" },
+    "paper": { "hex": "#FFF1E8", "role": "Text on dark / the white band" },
+    "accent": { "hex": "#FF6A3D", "role": "Primary action, highlights, the one colour block" }
   }
 }

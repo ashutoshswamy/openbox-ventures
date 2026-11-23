@@ -76,7 +76,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             {/* swap the image in lib/data.ts; any 4:3 image fits the frame */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden border border-line bg-ink">
+            <div className="relative aspect-[4/3] w-full overflow-hidden">
               <Image
                 src={service.image}
                 alt={`${service.name} at Open Box Ventures LLP`}

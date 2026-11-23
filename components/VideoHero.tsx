@@ -1,201 +1,106 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { gsap } from "@/lib/gsap";
-import { LinkButton } from "./Button";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, SplitText, withReducedMotion } from "@/lib/gsap";
+import { Silk } from "./Silk";
 
-// Intro plays once per full page load; client-side navigations back to "/" skip it.
-// ponytail: intro disabled for now; set back to false to re-enable (video file kept in /public).
-let introPlayed = true;
-
+/**
+ * Hero: GSAP intro timeline (headline chars rise through a mask, pill draws open, copy fades up),
+ * a WebGL silk gradient behind it all (SilkGradient), then a scrubbed "curtain": the hero pins and recedes while the
+ * next section slides over it (see `main > * + *` in globals.css).
+ * ponytail: the old intro-video overlay was dropped with the hub image it shrank into; /hero-video-final.mp4 is unused.
+ */
 export function VideoHero() {
-  const reduced = useReducedMotion();
-  // playing: full-screen video · in: shrinking into the hero image · done: overlay gone
-  const [phase, setPhase] = useState<"playing" | "in" | "done">(
-    introPlayed ? "done" : "playing",
-  );
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const skipRef = useRef<HTMLButtonElement>(null);
-  const targetRef = useRef<HTMLDivElement>(null);
-  const shrinking = useRef(false);
+  const root = useRef<HTMLElement>(null);
 
-  const finish = () => {
-    if (shrinking.current) return;
-    shrinking.current = true;
-    document.documentElement.style.overflow = "";
-    const box = boxRef.current;
-    const target = targetRef.current;
-    if (!box || !target) return setPhase("done");
-    const r = target.getBoundingClientRect();
-    gsap
-      .timeline({ onComplete: () => setPhase("done") })
-      .to(
-        backdropRef.current,
-        { opacity: 0, duration: 0.9, ease: "power2.inOut" },
-        0,
-      )
-      .to(
-        box,
-        {
-          top: r.top,
-          left: r.left,
-          width: r.width,
-          height: r.height,
-          borderRadius: 0,
-          duration: 1.1,
-          ease: "power3.inOut",
+  useGSAP(
+    () => {
+      const q = gsap.utils.selector(root);
+      withReducedMotion(
+        () => {
+          const split = SplitText.create(q(".hero-line")[0], { type: "chars", mask: "chars" });
+          gsap.set(q(".hero-in"), { opacity: 1 });
+
+          // intro: one timeline, positioned with labels/offsets
+          gsap
+            .timeline({ defaults: { ease: "power3.out" } })
+            .from(split.chars, { yPercent: 115, duration: 0.9, stagger: 0.035 })
+            .from(q(".hero-pill"), { scaleX: 0.6, opacity: 0, duration: 0.9, ease: "expo.out" }, "-=0.55")
+            .from(q(".hero-copy"), { y: 20, opacity: 0, duration: 0.7 }, "-=0.5");
+
+          // curtain: pin the hero, recede its content as the next section covers it
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: root.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                pin: true,
+                pinSpacing: false,
+              },
+            })
+            .to(q(".hero-content"), { scale: 0.86, y: -60, opacity: 0, ease: "none" }, 0)
+            .to(q(".hero-silk"), { scale: 1.18, ease: "none" }, 0);
+
+          // pointer parallax: the pill leans with the cursor
+          if (!window.matchMedia("(hover: none)").matches) {
+            const set = (sel: string, k: number) => ({
+              x: gsap.quickTo(q(sel), "x", { duration: 1.2, ease: "power3.out" }),
+              y: gsap.quickTo(q(sel), "yPercent", { duration: 1.2, ease: "power3.out" }),
+              k,
+            });
+            const layers = [set(".hero-pill", -3)];
+            const onMove = (e: PointerEvent) => {
+              const nx = e.clientX / window.innerWidth - 0.5;
+              const ny = e.clientY / window.innerHeight - 0.5;
+              layers.forEach((l) => {
+                l.x(nx * l.k * 10);
+                l.y(ny * l.k);
+              });
+            };
+            window.addEventListener("pointermove", onMove, { passive: true });
+            return () => {
+              window.removeEventListener("pointermove", onMove);
+              split.revert();
+            };
+          }
+          return () => split.revert();
         },
-        0,
-      )
-      .add(() => setPhase("in"), 0.8)
-      .to(box, { opacity: 0, duration: 0.5 }, 0.9);
-  };
-
-  useEffect(() => {
-    if (phase !== "playing") return;
-    introPlayed = true;
-    if (reduced) return setPhase("done");
-    window.scrollTo(0, 0);
-    document.documentElement.style.overflow = "hidden";
-    // autoplay can be blocked (e.g. low-power mode) - don't trap the visitor behind the overlay
-    videoRef.current?.play().catch(finish);
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduced]);
-
-  const shown = phase !== "playing";
-
-  // pointer parallax: values live outside React state, so moving the mouse never re-renders the hero
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const px = useSpring(mx, { stiffness: 80, damping: 20 });
-  const py = useSpring(my, { stiffness: 80, damping: 20 });
-  const onMove = (e: React.PointerEvent<HTMLElement>) => {
-    if (reduced || e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set(((e.clientX - r.left) / r.width - 0.5) * -28);
-    my.set(((e.clientY - r.top) / r.height - 0.5) * -20);
-  };
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
+        () => {
+          gsap.set(q(".hero-in"), { opacity: 1 });
+        },
+      );
+    },
+    { scope: root },
+  );
 
   return (
     <section
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      className="relative flex min-h-[calc(100svh-68px)] flex-col justify-center overflow-hidden px-6 pb-14 pt-12 md:px-10 md:pb-16 md:pt-14"
+      ref={root}
+      className="relative flex min-h-svh flex-col justify-center overflow-hidden px-6 pb-28 pt-6 md:px-10 md:pb-32"
     >
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:gap-6">
-        <motion.div
-          className="relative z-10 min-w-0"
-          initial="hidden"
-          animate={shown ? "show" : "hidden"}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.12 } },
-          }}
-        >
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-            }}
-            className="font-display text-[clamp(46px,5.8vw,92px)] leading-[0.92]"
-          >
-            Every service.
-            <br />
-            <span className="text-accent">One team.</span>
-          </motion.h1>
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-            className="mt-7 max-w-sm text-body-lg text-paper/75"
-          >
-            Logistics, marketing, events, tech and more, run by one accountable team. Brief us once.
-          </motion.p>
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-            className="mt-9 flex flex-wrap gap-4"
-          >
-            <LinkButton href="/contact">Start a project</LinkButton>
-            <LinkButton href="/services" variant="outline">
-              Explore services
-            </LinkButton>
-          </motion.div>
-        </motion.div>
-
-        {/* The hub runs wider than the text column and bleeds toward the right edge on large screens.
-            Outer layer: pointer parallax (motion values, no re-renders). Inner layer: slow idle float. */}
-        <motion.div
-          ref={targetRef}
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: shown ? 1 : 0, scale: shown ? 1 : 0.94 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[1698/926] w-full lg:-mr-10 lg:w-[calc(100%+2.5rem)]"
-        >
-          <motion.div className="absolute inset-0" style={{ x: px, y: py }}>
-            <motion.div
-              className="absolute inset-0"
-              animate={reduced ? undefined : { y: [0, -10, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {/* transparent PNG; swap /hero.png for any cut-out or photo */}
-              <Image
-                src="/hero.png"
-                alt="Open Box Ventures LLP service lines connected around one hub"
-                fill
-                sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
-                priority
-                className="object-contain"
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+      <div aria-hidden className="hero-silk absolute inset-0 origin-center">
+        <Silk name="hero" />
       </div>
-
-      {phase !== "done" && (
-        <div ref={overlayRef} className="fixed inset-0 z-[70]">
-          <div ref={backdropRef} className="absolute inset-0 bg-ink" />
-          <div
-            ref={boxRef}
-            className="fixed left-0 top-0 h-svh w-screen overflow-hidden"
-          >
-            <video
-              ref={videoRef}
-              src="/hero-video-final.mp4"
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              playsInline
-              preload="auto"
-              onEnded={finish}
-              onError={finish}
-            />
-          </div>
-          <button
-            ref={skipRef}
-            type="button"
-            onClick={finish}
-            className="absolute bottom-6 right-6 z-10 border border-paper/40 px-4 py-2 text-body-sm font-medium text-paper transition-colors hover:bg-paper hover:text-ink md:bottom-8 md:right-10"
-          >
-            Skip intro
-          </button>
-        </div>
-      )}
+      {/* flat ink scrim over the silk keeps the headline above AA contrast on the bright folds */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-ink/30"
+      />
+      <div className="hero-content relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
+        <h1
+          className="hero-in font-display text-[clamp(40px,8.5vw,128px)] font-normal leading-[1.1]"
+          style={{ opacity: 0 }}
+        >
+          <span className="hero-line block">Every service.</span>
+          <span className="hero-pill pill-outline mt-4 block w-fit max-w-full px-[0.6em]">One team</span>
+        </h1>
+        <p className="hero-in hero-copy mt-10 max-w-lg text-body-lg text-paper/75" style={{ opacity: 0 }}>
+          Logistics, marketing, events, tech and more, run by one accountable team. Brief us once.
+        </p>
+      </div>
     </section>
   );
 }

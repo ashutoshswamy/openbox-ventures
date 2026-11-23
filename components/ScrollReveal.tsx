@@ -1,70 +1,106 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, withReducedMotion } from "@/lib/gsap";
+import { DUR, EASE } from "@/lib/motion-tokens";
+
+// Elements start hidden inline (no flash before hydration); layout.tsx's <noscript> rule un-hides them without JS.
 
 export function ScrollReveal({
   children,
   className,
   delay = 0,
-  y = 24,
+  y = 40,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   y?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      withReducedMotion(
+        () => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y },
+            {
+              opacity: 1,
+              y: 0,
+              duration: DUR.slow,
+              delay,
+              ease: EASE.smooth,
+              scrollTrigger: { trigger: el, start: "top 90%", once: true },
+            },
+          );
+        },
+        () => {
+          gsap.set(el, { opacity: 1 });
+        },
+      );
+    },
+    { scope: ref },
+  );
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <div ref={ref} className={className} style={{ opacity: 0 }}>
       {children}
-    </motion.div>
+    </div>
   );
 }
-
-export function staggerContainer(stagger = 0.08): Variants {
-  return {
-    hidden: {},
-    show: { transition: { staggerChildren: stagger } },
-  };
-}
-
-export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
 
 export function StaggerGroup({
   children,
   className,
-  stagger,
+  stagger = 0.1,
 }: {
   children: ReactNode;
   className?: string;
   stagger?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      const items = gsap.utils.toArray<HTMLElement>("[data-stagger]", el);
+      withReducedMotion(
+        () => {
+          gsap.fromTo(
+            items,
+            { opacity: 0, y: 50, scale: 0.96 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: DUR.slow,
+              ease: EASE.smooth,
+              stagger,
+              scrollTrigger: { trigger: el, start: "top 85%", once: true },
+            },
+          );
+        },
+        () => {
+          gsap.set(items, { opacity: 1 });
+        },
+      );
+    },
+    { scope: ref },
+  );
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-      variants={staggerContainer(stagger)}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export function StaggerChild({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.div className={className} variants={staggerItem}>
+    <div data-stagger className={className} style={{ opacity: 0 }}>
       {children}
-    </motion.div>
+    </div>
   );
 }

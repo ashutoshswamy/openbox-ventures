@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="flex min-h-[calc(100svh-68px)] items-center overflow-hidden px-6 py-16 md:px-10">
+    <section className="flex min-h-svh items-center overflow-hidden px-6 py-16 md:px-10">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
         <div className="order-2 lg:order-1">
           <h1 className="font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">This box is empty.</h1>

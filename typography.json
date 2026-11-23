@@ -3,9 +3,9 @@
   "description": "Typography system for Open Box Ventures LLP (OBV)",
   "roles": {
     "display": {
-      "fontFamily": "Bricolage Grotesque",
+      "fontFamily": "Syne",
       "fallback": "sans-serif",
-      "weights": [600, 700, 800],
+      "weights": [400, 500, 600, 700],
       "textTransform": "none",
       "usage": "Headlines / section titles, sentence case, tight tracking",
       "scale": { "xl": "clamp(44px, 7vw, 104px)", "lg": "clamp(32px, 5vw, 64px)", "md": "clamp(22px, 2.2vw, 30px)" }

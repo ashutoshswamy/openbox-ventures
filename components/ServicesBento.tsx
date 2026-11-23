@@ -41,7 +41,7 @@ function ServiceCell({
         paper ? "on-paper border-ink/20" : "border-line"
       } ${className}`}
     >
-      <span className={`relative block aspect-[4/3] w-full ${paper ? "bg-ink" : ""}`}>
+      <span className={`relative block aspect-[4/3] w-full`}>
         <Image
           src={`/services/${serviceImages[slug]}.png`}
           alt=""

@@ -24,7 +24,7 @@ function DisciplineCell({ service, flip, paper }: { service: (typeof services)[n
           {service.offerings.slice(0, 3).join(", ")}
         </p>
       </div>
-      <span className={`relative block aspect-[4/3] w-full shrink-0 sm:w-44 lg:w-64 ${paper ? "bg-ink" : ""}`}>
+      <span className={`relative block aspect-[4/3] w-full shrink-0 sm:w-44 lg:w-64`}>
         <Image
           src={`/services/${serviceImages[service.slug]}.png`}
           alt=""

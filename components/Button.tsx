@@ -1,18 +1,18 @@
 import Link from "next/link";
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 
-/** One button look, used everywhere: sharp corners, one height. Variants only change colour. */
+/** One button look, used everywhere: full pill, one height. Variants only change colour. */
 const base =
-  "inline-flex h-14 items-center justify-center gap-2 px-7 text-body-sm font-semibold transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.98]";
+  "inline-flex h-14 items-center justify-center gap-2 rounded-full px-8 font-display text-body-base font-semibold transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.98]";
 
 export const variants = {
-  /** primary: cerulean on black pages, rose on hover for the third brand color */
+  /** primary: ember fill, amber on hover */
   accent: "bg-accent text-ink hover:bg-accent-2",
   /** on the orange block */
   ink: "bg-ink text-paper hover:bg-paper hover:text-ink",
   /** on the white band */
   inkSolid: "bg-ink text-paper hover:bg-paper/90 hover:text-ink",
-  outline: "border border-paper/35 text-paper hover:border-paper hover:bg-paper hover:text-ink",
+  outline: "border border-paper/35 bg-ink/40 text-paper backdrop-blur hover:border-paper hover:bg-paper hover:text-ink",
   outlineInk: "border border-ink/45 text-ink hover:bg-ink hover:text-paper",
 } as const;
 

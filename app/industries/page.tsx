@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function IndustriesPage() {
   return (
     <>
-      <section className="relative flex min-h-[calc(100svh-68px)] flex-col">
+      <section className="relative flex min-h-svh flex-col">
         <h1 className="sr-only">Industries Open Box Ventures LLP serves</h1>
         <IndustriesBento />
       </section>

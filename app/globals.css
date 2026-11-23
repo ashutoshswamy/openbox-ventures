@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Open Box Ventures LLP (OBV) - Jet Black, paper white, Cerulean Blue as the
-     primary accent (links, CTAs, focus), Neon Rose reserved for sparse
-     secondary signals (hover states, selection, small highlights only). */
-  --color-ink: #0a0a0a; /* background / dark text - Jet Black */
-  --color-paper: #f5f5f3; /* foreground / light text / the white band */
-  --color-accent: #007ba7; /* Cerulean Blue - the primary accent */
-  --color-accent-2: #ff2d95; /* Neon Rose - secondary signal, used sparingly */
-  --color-line: rgba(245, 245, 243, 0.16);
+  /* Ember theme: night-plum black, warm paper, one ember-orange accent.
+     Layout/style language borrowed from elephantdesign.com; colors are ours. */
+  --color-ink: #0b0a10; /* background / dark text */
+  --color-paper: #fff1e8; /* foreground / light text / the one paper band */
+  --color-accent: #ff6a3d; /* Ember - primary accent, CTAs, glow */
+  --color-accent-2: #ffb44d; /* Amber - hover + selection only */
+  --color-line: rgba(255, 241, 232, 0.16);
   --focus: var(--color-accent);
 }
 
@@ -20,7 +19,7 @@
   --color-line: var(--color-line);
 
   /* Typography roles - see typography.json */
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-syne);
   --font-body: var(--font-geist);
   --font-mono: var(--font-geist);
 
@@ -37,7 +36,7 @@
   --text-utility-sm: 13px;
   --text-utility-xs: 12px;
 
-  /* one corner system: sharp. Everything is a hard edge except round icon buttons. */
+  /* one corner system: panels stay hard-edged, every interactive control is a full pill. */
   --radius-panel: 0px;
 }
 
@@ -110,8 +109,43 @@ select {
 
 .font-display {
   font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   overflow-wrap: break-word;
   min-width: 0;
+}
+
+/* Elephant-style outlined, softly glowing pill around the key word of a headline. */
+.pill-outline {
+  display: inline-block;
+  border: 2px solid rgba(255, 241, 232, 0.85);
+  border-radius: 9999px;
+  padding: 0.06em 0.5em 0.1em;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  box-shadow: 0 0 28px rgba(255, 106, 61, 0.35), inset 0 0 22px rgba(255, 106, 61, 0.18);
+}
+
+/* Floating glass pill that holds the primary nav pair. */
+.pill-dock {
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: rgba(11, 10, 16, 0.88);
+  backdrop-filter: blur(14px);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .pill-dock {
+    background: var(--color-ink);
+    backdrop-filter: none;
+  }
+}
+
+/* Curtain: every section after the pinned hero is its own stacking layer, so it slides over the hero.
+   Transparent sections just carry their content over it; the paper band is opaque and covers it. */
+main > * + *:not(.fixed) {
+  position: relative;
+  z-index: 1;
 }

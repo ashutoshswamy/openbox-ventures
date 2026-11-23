@@ -1,6 +1,7 @@
 import { ScrollHeadline } from "./ScrollHeadline";
 import { ScrollReveal } from "./ScrollReveal";
 import { LinkButton } from "./Button";
+import { Silk } from "./Silk";
 
 /** Closing call to action; orange only on the button. */
 export function CTA({
@@ -11,14 +12,16 @@ export function CTA({
   body?: string;
 }) {
   return (
-    <section className="overflow-hidden border-t border-line px-6 py-24 md:px-10 md:py-36">
-      <div className="mx-auto max-w-7xl">
+    <section className="relative overflow-hidden border-t border-line px-6 py-24 md:px-10 md:py-36">
+      <Silk name="dusk" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-ink/40" />
+      <div className="relative mx-auto max-w-7xl">
         <ScrollHeadline className="max-w-5xl font-display text-[clamp(42px,7.4vw,120px)] leading-[0.92]">
           {headline}
         </ScrollHeadline>
         <ScrollReveal delay={0.05}>
           <div className="mt-12 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <p className="max-w-lg text-body-lg text-paper/70">{body}</p>
+            <p className="max-w-lg text-body-lg text-paper/85">{body}</p>
             <div className="flex flex-wrap gap-4">
               <LinkButton href="/contact" variant="accent">
                 Start a project
