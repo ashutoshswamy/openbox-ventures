@@ -93,7 +93,7 @@ export function Footer() {
         </div>
 
         <div className="mt-20 md:mt-28">
-          <FooterWordmark text="Open Box Ventures" />
+          <FooterWordmark text="Open Box Ventures LLP" />
         </div>
 
         <div className="flex flex-col gap-4 border-t border-line pb-28 pt-8 text-body-sm text-paper/60 md:flex-row md:items-center md:justify-between">

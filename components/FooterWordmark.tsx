@@ -56,7 +56,7 @@ export function FooterWordmark({ text }: { text: string }) {
     <p
       ref={ref}
       aria-hidden
-      className="select-none whitespace-nowrap font-display text-[clamp(36px,8.8vw,140px)] pb-2 leading-[1.05] tracking-tight text-paper"
+      className="select-none whitespace-nowrap font-display text-[clamp(28px,7vw,112px)] pb-2 leading-[1.05] tracking-tight text-paper"
       style={{ opacity: 0 }}
     >
       {text}
