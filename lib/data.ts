@@ -229,3 +229,11 @@ export const processSteps = [
   { title: "Deliver", body: "On time and on brief, with the handover your team needs to run it." },
   { title: "Support", body: "Post-delivery reporting and an open line for whatever comes next." },
 ] as const;
+
+/** Partners of the LLP. Add a person to `members` to list them under the founders. */
+type Person = { name: string; role: string; photo?: string };
+export const founders: readonly Person[] = [
+  { name: "Akhil Arora", role: "Co-founder", photo: "/team/akhilarora.jpg" },
+  { name: "Kavish", role: "Co-founder", photo: "/team/kavish.png" },
+];
+export const members: readonly Person[] = [];

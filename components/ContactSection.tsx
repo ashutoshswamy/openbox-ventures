@@ -6,10 +6,8 @@ import { gsap } from "@/lib/gsap";
 import { DUR, EASE } from "@/lib/motion-tokens";
 import { ScrollReveal } from "./ScrollReveal";
 import { ScrollHeadline } from "./ScrollHeadline";
-import { useFloatLabel } from "@/lib/useFloatLabel";
-import { useFieldFocus } from "@/lib/useFieldFocus";
 import { useMagnetic } from "@/lib/useMagnetic";
-import { ButtonLink } from "./Button";
+import { Button, ButtonLink } from "./Button";
 import { ArrowDown, Check, Mail, MapPin, Phone } from "lucide-react";
 import { company, services } from "@/lib/data";
 
@@ -20,7 +18,6 @@ export function ContactSection() {
   const [submitting, setSubmitting] = useState(false);
   const magneticBtn = useMagnetic<HTMLButtonElement>(0.3);
   const btnDefaultRef = useRef<HTMLSpanElement>(null);
-  const btnSentRef = useRef<HTMLSpanElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,16 +29,7 @@ export function ContactSection() {
       return;
     }
 
-    gsap
-      .timeline({ onComplete: () => setSent(true) })
-      .to(btnDefaultRef.current, { yPercent: -100, opacity: 0, duration: DUR.fast, ease: EASE.smoothIn })
-      .fromTo(
-        btnSentRef.current,
-        { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: DUR.fast, ease: EASE.smooth },
-        "-=0.15",
-      )
-      .to({}, { duration: 0.5 });
+    gsap.to(btnDefaultRef.current, { opacity: 0, y: -8, duration: DUR.fast, ease: EASE.smoothIn, onComplete: () => setSent(true) });
   };
 
   return (
@@ -130,30 +118,29 @@ export function ContactSection() {
                 <p className="mt-2 text-body-sm text-paper/60">We&apos;ll follow up within one business day.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <FloatField label="Name" name="name" required />
-                  <FloatField label="Company" name="company" />
+              <form onSubmit={handleSubmit} className="space-y-12">
+                <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+                  <Field label="Name" name="name" autoComplete="name" required />
+                  <Field label="Company" name="company" autoComplete="organization" hint="Optional" />
                 </div>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <FloatField label="Email" name="email" type="email" required />
-                  <SelectField />
-                </div>
-                <FloatField label="Message" name="message" textarea required />
-                <button
-                  ref={magneticBtn}
-                  type="submit"
-                  disabled={submitting}
-                  className="relative block h-14 w-full overflow-hidden bg-accent font-body text-body-sm font-semibold text-ink transition-colors hover:bg-paper"
-                >
-                  <span ref={btnDefaultRef} className="absolute inset-0 flex items-center justify-center">
-                    Send brief
-                  </span>
-                  <span ref={btnSentRef} className="absolute inset-0 flex items-center justify-center gap-2 opacity-0">
-                    <Check className="h-4 w-4" strokeWidth={1.4} />
-                    Sent
-                  </span>
-                </button>
+                <Field label="Email" name="email" type="email" autoComplete="email" required />
+                <fieldset>
+                  <legend className="text-body-sm font-medium text-paper/70">What do you need? *</legend>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {[...services.map((s) => ({ value: s.slug, label: s.name })), { value: "multiple", label: "Not sure yet" }].map((o, i) => (
+                      <label key={o.value} className="cursor-pointer">
+                        <input type="radio" name="service-area" value={o.value} required={i === 0} className="peer sr-only" />
+                        <span className="inline-flex h-11 items-center rounded-full border border-paper/35 px-5 text-body-sm transition-colors hover:border-paper peer-checked:border-accent peer-checked:bg-accent peer-checked:text-ink peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
+                          {o.label}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <Field label="The brief" name="message" textarea required hint="Goals, timeline, anything we should know." />
+                <Button ref={magneticBtn} type="submit" disabled={submitting} className="relative w-full overflow-hidden sm:w-auto sm:min-w-56">
+                  <span ref={btnDefaultRef}>Send brief</span>
+                </Button>
               </form>
             )}
           </ScrollReveal>
@@ -163,83 +150,35 @@ export function ContactSection() {
   );
 }
 
-function SelectField() {
-  const { fieldRef, onFocus, onBlur } = useFieldFocus<HTMLSelectElement>();
-
-  return (
-    <div>
-      <select
-        ref={fieldRef}
-        id="service-area"
-        name="service-area"
-        aria-label="Area of interest"
-        required
-        defaultValue=""
-        onFocus={onFocus}
-        onBlur={onBlur}
-        className="h-14 w-full rounded-panel border border-line bg-transparent px-4 font-body text-body-sm text-paper outline-none"
-      >
-        <option value="" disabled hidden className="bg-ink">
-          Area of interest
-        </option>
-        {services.map((s) => (
-          <option key={s.slug} value={s.slug} className="bg-ink">
-            {s.name}
-          </option>
-        ))}
-        <option value="multiple" className="bg-ink">Multiple / not sure yet</option>
-      </select>
-    </div>
-  );
-}
-
-function FloatField({
+function Field({
   label,
   name,
   required,
   textarea = false,
   type = "text",
+  hint,
+  autoComplete,
 }: {
   label: string;
   name: string;
   required?: boolean;
   textarea?: boolean;
   type?: string;
+  hint?: string;
+  autoComplete?: string;
 }) {
-  const { labelRef, fieldRef, onFocus, onBlur } = useFloatLabel<HTMLInputElement | HTMLTextAreaElement>();
-  const baseClass = "w-full rounded-panel border border-line bg-transparent px-4 font-body text-body-sm text-paper outline-none";
-
+  const cls =
+    "mt-2 w-full border-0 border-b border-paper/35 bg-transparent py-3 text-body-lg text-paper outline-none transition-colors placeholder:text-paper/40 hover:border-paper/70 focus:border-accent";
   return (
-    <div className="relative">
-      <label
-        ref={labelRef}
-        htmlFor={name}
-        className={`pointer-events-none absolute left-4 ${textarea ? "top-4" : "top-1/2 -translate-y-1/2"} ${fieldLabelClass} text-paper/55`}
-      >
+    <div>
+      <label htmlFor={name} className="text-body-sm font-medium text-paper/70">
         {label}
+        {required && " *"}
       </label>
       {textarea ? (
-        <textarea
-          ref={fieldRef as React.Ref<HTMLTextAreaElement>}
-          id={name}
-          name={name}
-          required={required}
-          rows={4}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          className={`${baseClass} resize-none pb-2.5 pt-6`}
-        />
+        <textarea id={name} name={name} required={required} rows={4} placeholder={hint} className={`${cls} resize-none`} />
       ) : (
-        <input
-          type={type}
-          ref={fieldRef as React.Ref<HTMLInputElement>}
-          id={name}
-          name={name}
-          required={required}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          className={`${baseClass} h-14 pt-4`}
-        />
+        <input id={name} name={name} type={type} required={required} autoComplete={autoComplete} placeholder={hint} className={cls} />
       )}
     </div>
   );

@@ -5,6 +5,7 @@ import { FooterWordmark } from "./FooterWordmark";
 
 const siteLinks = [
   { href: "/about", label: "About" },
+  { href: "/team", label: "Team" },
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
   { href: "/contact", label: "Contact" },
