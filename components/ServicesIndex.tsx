@@ -14,14 +14,14 @@ import { services } from "@/lib/data";
  * family, with one solid ember cell and one paper cell for contrast. Under lg it collapses to one column.
  */
 const cells = [
-  { span: "lg:col-span-4", wide: true, bg: "#17101f", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-4", wide: true, bg: "#14586e", fg: "text-paper", muted: "text-paper/70" },
   { span: "lg:col-span-2", wide: false, bg: "var(--color-accent)", fg: "text-ink", muted: "text-ink/80" },
-  { span: "lg:col-span-2", wide: false, bg: "#10122a", fg: "text-paper", muted: "text-paper/70" },
-  { span: "lg:col-span-4", wide: true, bg: "#1f120d", fg: "text-paper", muted: "text-paper/70" },
-  { span: "lg:col-span-3", wide: true, bg: "#17101f", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-2", wide: false, bg: "#0e3a4a", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-4", wide: true, bg: "#3a3837", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-3", wide: true, bg: "#14586e", fg: "text-paper", muted: "text-paper/70" },
   { span: "lg:col-span-3", wide: true, bg: "var(--color-paper)", fg: "text-ink", muted: "text-ink/75" },
-  { span: "lg:col-span-4", wide: true, bg: "#10122a", fg: "text-paper", muted: "text-paper/70" },
-  { span: "lg:col-span-2", wide: false, bg: "#1f120d", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-4", wide: true, bg: "#0e3a4a", fg: "text-paper", muted: "text-paper/70" },
+  { span: "lg:col-span-2", wide: false, bg: "#3a3837", fg: "text-paper", muted: "text-paper/70" },
 ] as const;
 
 export function ServicesIndex({

@@ -1,9 +1,9 @@
 {
-  "name": "OBV Color Theme",
-  "description": "Ember theme: night-plum black, warm paper, one ember-orange accent.",
+  "name": "OBV Color Theme (Arctic Interface)",
+  "description": "Arctic Interface theme: near-black, frost paper, glacier-blue accent.",
   "colors": {
-    "ink": { "hex": "#0B0A10", "role": "Background / dark text" },
-    "paper": { "hex": "#FFF1E8", "role": "Text on dark / the white band" },
-    "accent": { "hex": "#FF6A3D", "role": "Primary action, highlights, the one colour block" }
+    "ink": { "hex": "#0F0E0D", "role": "Background / dark text" },
+    "paper": { "hex": "#D1DBDE", "role": "Text on dark / the white band" },
+    "accent": { "hex": "#67ABC1", "role": "Primary action, highlights, the one colour block" }
   }
 }

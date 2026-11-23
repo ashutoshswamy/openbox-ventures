@@ -51,7 +51,7 @@ export const services = [
     slug: "logistics-supply-chain",
     name: "Logistics & Supply Chain",
     icon: "Truck",
-    accent: "#7ca6c9",
+    accent: "#67abc1",
     image: "/services/logistics.png",
     tagline: "Freight, dispatch, and cross-border trade, handled end to end.",
     summary:
@@ -70,7 +70,7 @@ export const services = [
     slug: "marketing-branding",
     name: "Marketing & Branding",
     icon: "Megaphone",
-    accent: "#c98f7c",
+    accent: "#d1dbde",
     image: "/services/marketing.png",
     tagline: "Positioning, identity, and campaigns that actually move numbers.",
     summary:
@@ -89,7 +89,7 @@ export const services = [
     slug: "event-management",
     name: "Event Management",
     icon: "CalendarDays",
-    accent: "#b3c97c",
+    accent: "#8fbccc",
     image: "/services/events.png",
     tagline: "Launches, conferences, and activations, planned and run on the ground.",
     summary:
@@ -108,7 +108,7 @@ export const services = [
     slug: "it-digital",
     name: "IT Services & Digital Solutions",
     icon: "MonitorSmartphone",
-    accent: "#8f7cc9",
+    accent: "#4f8fa6",
     image: "/services/it.png",
     tagline: "Software, automation, and support to keep the business moving.",
     summary:
@@ -127,7 +127,7 @@ export const services = [
     slug: "ecommerce-development",
     name: "E-Commerce Development",
     icon: "ShoppingCart",
-    accent: "#7cc9a6",
+    accent: "#a9c8d3",
     image: "/services/ecommerce.png",
     tagline: "Storefronts built to sell and simple to run.",
     summary:
@@ -146,7 +146,7 @@ export const services = [
     slug: "content-creation",
     name: "Content Creation",
     icon: "PenLine",
-    accent: "#c9b37c",
+    accent: "#67abc1",
     image: "/services/contentcreation.png",
     tagline: "Words, visuals, and video that carry the brand across every channel.",
     summary:
@@ -165,7 +165,7 @@ export const services = [
     slug: "photography-videography",
     name: "Photography & Videography",
     icon: "Camera",
-    accent: "#7c9fc9",
+    accent: "#d1dbde",
     image: "/services/photovideo.png",
     tagline: "Product, brand, and event shoots, from brief to final cut.",
     summary:
@@ -184,7 +184,7 @@ export const services = [
     slug: "advertising",
     name: "Advertising Services",
     icon: "Radio",
-    accent: "#c97ca6",
+    accent: "#8fbccc",
     image: "/services/advertising.png",
     tagline: "Media planning and buying across digital, print, and outdoor.",
     summary:

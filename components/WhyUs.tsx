@@ -13,9 +13,9 @@ const images = ["roof", "multidisciplinary", "international", "goals"];
 
 /** One flat, opaque surface per card (cards stack, so they must not be see-through); the last is the page's solid colour block. */
 const cards = [
-  { bg: "#17101f", text: "text-paper", muted: "text-paper/75", flip: false },
-  { bg: "#1f120d", text: "text-paper", muted: "text-paper/75", flip: true },
-  { bg: "#10122a", text: "text-paper", muted: "text-paper/75", flip: false },
+  { bg: "#14586e", text: "text-paper", muted: "text-paper/75", flip: false },
+  { bg: "#3a3837", text: "text-paper", muted: "text-paper/75", flip: true },
+  { bg: "#0e3a4a", text: "text-paper", muted: "text-paper/75", flip: false },
   { bg: "var(--color-accent)", text: "text-ink", muted: "text-ink/80", flip: true },
 ] as const;
 

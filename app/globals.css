@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Ember theme: night-plum black, warm paper, one ember-orange accent.
+  /* Arctic Interface theme: near-black, frost paper, glacier-blue accent.
      Layout/style language borrowed from elephantdesign.com; colors are ours. */
-  --color-ink: #0b0a10; /* background / dark text */
-  --color-paper: #fff1e8; /* foreground / light text / the one paper band */
-  --color-accent: #ff6a3d; /* Ember - primary accent, CTAs, glow */
-  --color-accent-2: #ffb44d; /* Amber - hover + selection only */
-  --color-line: rgba(255, 241, 232, 0.16);
+  --color-ink: #0f0e0d; /* background / dark text */
+  --color-paper: #d1dbde; /* foreground / light text / the one paper band */
+  --color-accent: #67abc1; /* Glacier - primary accent, CTAs, glow */
+  --color-accent-2: #d1dbde; /* Frost - hover + selection only */
+  --color-line: rgba(209, 219, 222, 0.16);
   --focus: var(--color-accent);
 }
 
@@ -125,12 +125,12 @@ select {
 /* Elephant-style outlined, softly glowing pill around the key word of a headline. */
 .pill-outline {
   display: inline-block;
-  border: 2px solid rgba(255, 241, 232, 0.85);
+  border: 2px solid rgba(209, 219, 222, 0.85);
   border-radius: 9999px;
   padding: 0.06em 0.5em 0.1em;
   text-transform: uppercase;
   letter-spacing: 0;
-  box-shadow: 0 0 28px rgba(255, 106, 61, 0.35), inset 0 0 22px rgba(255, 106, 61, 0.18);
+  box-shadow: 0 0 28px rgba(103, 171, 193, 0.35), inset 0 0 22px rgba(103, 171, 193, 0.18);
 }
 
 /* Floating glass pill that holds the primary nav pair. */
@@ -140,7 +140,7 @@ select {
   padding: 0.5rem;
   border: 1px solid var(--color-line);
   border-radius: 14px;
-  background: rgba(11, 10, 16, 0.88);
+  background: rgba(15, 14, 13, 0.88);
   backdrop-filter: blur(14px);
 }
 @media (prefers-reduced-transparency: reduce) {
