@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Arctic Interface theme: near-black, frost paper, glacier-blue accent.
+  /* Cyan + violet theme: deep indigo-black, lavender-white paper, cyan accent, violet hover.
      Layout/style language borrowed from elephantdesign.com; colors are ours. */
-  --color-ink: #0f0e0d; /* background / dark text */
-  --color-paper: #d1dbde; /* foreground / light text / the one paper band */
-  --color-accent: #67abc1; /* Glacier - primary accent, CTAs, glow */
-  --color-accent-2: #d1dbde; /* Frost - hover + selection only */
-  --color-line: rgba(209, 219, 222, 0.16);
+  --color-ink: #0a0814; /* background / dark text */
+  --color-paper: #e4e6ff; /* foreground / light text / the one paper band */
+  --color-accent: #22d3ee; /* Glacier - primary accent, CTAs, glow */
+  --color-accent-2: #a78bfa; /* Violet - hover + selection */
+  --color-line: rgba(228, 230, 255, 0.16);
   --focus: var(--color-accent);
 }
 
@@ -22,6 +22,7 @@
   --font-display: var(--font-syne);
   --font-body: var(--font-geist);
   --font-mono: var(--font-geist);
+  --font-serif: var(--font-instrument);
 
   --text-display-xl: clamp(44px, 7vw, 104px);
   --text-display-lg: clamp(32px, 5vw, 64px);
@@ -125,12 +126,12 @@ select {
 /* Elephant-style outlined, softly glowing pill around the key word of a headline. */
 .pill-outline {
   display: inline-block;
-  border: 2px solid rgba(209, 219, 222, 0.85);
+  border: 2px solid rgba(228, 230, 255, 0.85);
   border-radius: 9999px;
   padding: 0.06em 0.5em 0.1em;
   text-transform: uppercase;
   letter-spacing: 0;
-  box-shadow: 0 0 28px rgba(103, 171, 193, 0.35), inset 0 0 22px rgba(103, 171, 193, 0.18);
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.35), inset 0 0 22px rgba(34, 211, 238, 0.18);
 }
 
 /* Floating glass pill that holds the primary nav pair. */
@@ -140,7 +141,7 @@ select {
   padding: 0.5rem;
   border: 1px solid var(--color-line);
   border-radius: 14px;
-  background: rgba(15, 14, 13, 0.88);
+  background: rgba(10, 8, 20, 0.88);
   backdrop-filter: blur(14px);
 }
 @media (prefers-reduced-transparency: reduce) {
@@ -189,4 +190,46 @@ main > * + *:not(.fixed) {
 ::view-transition-old(dock),
 ::view-transition-new(dock) {
   animation: none;
+}
+
+/* hero: pills + scene visibility (scenes after the first start hidden; the timeline reveals them) */
+.sc:not(.s1) {
+  visibility: hidden;
+  opacity: 0;
+}
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 9999px;
+  padding: 0.12em 0.6em;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.25), inset 0 0 12px rgba(255, 255, 255, 0.06);
+  font-size: 0.62em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.hero-pill.big {
+  font-size: 1em;
+  padding: 0.1em 0.8em;
+}
+.hero-pill .pc {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.5em;
+}
+.hero-pill .pw {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.hero-pill .pw > span {
+  height: 1.5em;
+  line-height: 1.5em;
+  white-space: nowrap;
+}
+.sc {
+  will-change: transform, opacity;
 }

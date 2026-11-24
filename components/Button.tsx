@@ -61,3 +61,10 @@ export function ButtonLink({
     </a>
   );
 }
+
+/** Sharp-cornered buttons for the redesigned pages (hero language). Pair with `<Link className={...}>`. */
+export const sharp = {
+  base: "inline-flex h-14 items-center justify-center gap-2 px-9 font-display text-body-base font-semibold transition-colors",
+  accent: "bg-accent text-ink hover:bg-accent-2",
+  glass: "bg-paper/10 text-paper backdrop-blur hover:bg-paper hover:text-ink",
+} as const;

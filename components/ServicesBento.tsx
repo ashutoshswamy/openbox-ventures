@@ -1,115 +1,80 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { StatCounter } from "./StatCounter";
-import { bentoTitleStyle, serviceImages } from "./Bento";
-import { LinkButton } from "./Button";
-import { ScrollReveal } from "./ScrollReveal";
-import { stats, services, offices } from "@/lib/data";
+"use client";
 
-const timeZones = new Set(offices.map((o) => o.timezone)).size;
+import Link from "next/link";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { ArrowDownRight, Camera, CalendarDays, Megaphone, MonitorSmartphone, PenLine, Radio, ShoppingCart, Truck, type LucideIcon } from "lucide-react";
+import { gsap, ScrollTrigger, withReducedMotion } from "@/lib/gsap";
+import { StatCounter } from "./StatCounter";
+import { PromptCell, bentoTitleStyle } from "./Bento";
+import { stats, services } from "@/lib/data";
+
+const icons: Record<string, LucideIcon> = { Truck, Megaphone, CalendarDays, MonitorSmartphone, ShoppingCart, PenLine, Camera, Radio };
+
+// lg column spans (of 24) per cell, in reading order: stat, stat, svc | prompt, svc, svc | svc, svc | svc, svc, svc
+const spans = ["lg:col-span-12", "lg:col-span-7", "lg:col-span-7", "lg:col-span-12", "lg:col-span-12", "lg:col-span-8", "lg:col-span-8", "lg:col-span-8"];
 
 function StatCell({ value, suffix, label }: { value: number; suffix: string; label: string }) {
   return (
-    <div className="flex flex-1 flex-col justify-center border-line px-5 py-8 not-last:border-r lg:px-8 lg:py-10">
-      <div className="font-display text-[clamp(56px,7vw,112px)] leading-none">
-        <StatCounter value={value} suffix={suffix} />
+    <div className="svc-cell flex min-h-56 flex-col justify-center bg-ink px-8 py-10 lg:col-span-6 lg:min-h-[300px] lg:px-[4.5%]">
+      <div className="font-display text-[clamp(56px,7vw,104px)] font-semibold leading-none text-accent">
+        <StatCounter value={value} suffix={suffix} />+
       </div>
-      <p className="mt-3 text-body-base font-medium text-paper/70">{label}</p>
+      <p className="mt-3 font-display text-body-lg font-semibold">{label}</p>
     </div>
   );
 }
 
-/** name/tagline pulled straight from lib/data.ts. `paper` flips one cell to the white surface. */
-function ServiceCell({
-  slug,
-  name,
-  tagline,
-  className = "",
-  paper = false,
-}: {
-  slug: string;
-  name: string;
-  tagline: string;
-  className?: string;
-  paper?: boolean;
-}) {
-  return (
-    <Link
-      href={`/services/${slug}`}
-      className={`group flex flex-col justify-between gap-8 px-6 py-7 transition-colors hover:bg-paper hover:text-ink lg:px-7 lg:py-8 ${
-        paper ? "on-paper border-ink/20" : "border-line"
-      } ${className}`}
-    >
-      <span className={`relative block aspect-[4/3] w-full`}>
-        <Image
-          src={`/services/${serviceImages[slug]}.png`}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          className="object-contain transition-transform duration-500 group-hover:scale-105"
-        />
-      </span>
-      <span className="min-w-0">
-        <span className="flex items-start justify-between gap-2 text-display-md leading-[1.05]" style={bentoTitleStyle}>
-          {name}
-          <ArrowUpRight
-            className="mt-1 h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            strokeWidth={2}
-          />
-        </span>
-        <span className={`mt-2 block text-body-sm group-hover:text-ink/80 ${paper ? "text-ink/65" : "text-paper/60"}`}>
-          {tagline}
-        </span>
-      </span>
-    </Link>
-  );
-}
-
+/** Services: edge-to-edge hairline bento (stats, prompt, one tile per service); cells rise in as they scroll into view. */
 export function ServicesBento() {
+  const root = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      withReducedMotion(
+        () => {
+          gsap.set(".svc-cell", { opacity: 0, y: 40 });
+          ScrollTrigger.batch(".svc-cell", {
+            start: "top bottom",
+            once: true,
+            onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power3.out", overwrite: true }),
+          });
+        },
+        () => {
+          gsap.set(".svc-cell", { opacity: 1 });
+        },
+      );
+    },
+    { scope: root },
+  );
+
   return (
-    <>
-      <header className="border-b border-line px-6 pb-14 pt-16 md:px-10 md:pb-20 md:pt-24">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:items-end lg:gap-16">
-          <ScrollReveal>
-            <p className="mb-6 text-body-sm font-medium text-accent">Services</p>
-            <h1 className="font-display text-[clamp(44px,7vw,104px)] leading-[0.94]">
-              Eight services.
-              <br />
-              One team that owns&nbsp;the&nbsp;result.
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <p className="max-w-md text-body-lg text-paper/70">
-              Logistics to content, events to e-commerce. Hire one discipline or hand us the whole brief; either way
-              you talk to one team.
-            </p>
-            <LinkButton href="/contact" className="mt-8">
-              Start a brief
-            </LinkButton>
-          </ScrollReveal>
-        </div>
-      </header>
-
-      <div className="flex border-b border-line">
-        <div className="mx-auto flex w-full max-w-7xl">
-          <StatCell value={stats[0].value} suffix={stats[0].suffix} label="Offices worldwide" />
-          <StatCell value={stats[1].value} suffix={stats[1].suffix} label="Countries" />
-          <StatCell value={timeZones} suffix="" label="Time zones" />
-        </div>
+    <div ref={root} >
+      <div className="grid grid-cols-1 border-t border-line [&>*]:border-b [&>*]:border-r [&>*]:border-line sm:grid-cols-2 lg:grid-cols-[repeat(24,minmax(0,1fr))]">
+        <StatCell value={stats[0].value} suffix={stats[0].suffix} label="Offices worldwide" />
+        <StatCell value={stats[1].value} suffix={stats[1].suffix} label="Countries" />
+        {services.map((s, i) => {
+          const Icon = icons[s.icon];
+          const cell = (
+            <Link
+              key={s.slug}
+              href={`/services/${s.slug}`}
+              className={`svc-cell group flex min-h-56 items-center justify-center gap-5 bg-ink px-8 py-10 transition-colors hover:bg-[#140f2a] lg:min-h-[300px] ${spans[i]}`}
+            >
+              <Icon className="h-16 w-16 shrink-0 text-accent transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105" strokeWidth={1.25} />
+              <span className="min-w-0">
+                <span className="block text-body-sm text-paper/70">Service 0{i + 1}</span>
+                <span className="block font-display text-[clamp(26px,2.6vw,40px)] leading-[1.08]" style={bentoTitleStyle}>
+                  {s.name}
+                  <ArrowDownRight className="ml-2 inline h-6 w-6 text-accent transition-transform group-hover:translate-x-1 group-hover:translate-y-1" strokeWidth={2.5} />
+                </span>
+              </span>
+            </Link>
+          );
+          // prompt cell sits before the 2nd service, filling out row 2
+          return i === 1 ? [<PromptCell key="prompt" className="svc-cell bg-ink sm:col-span-2 lg:col-span-10 lg:min-h-[300px]" />, cell] : cell;
+        })}
       </div>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4">
-        {services.map((s, i) => (
-          <ServiceCell
-            key={s.slug}
-            {...s}
-            className={`border-t border-line ${i % 2 ? "sm:border-l" : ""} ${i % 4 ? "lg:border-l" : "lg:border-l-0"} ${
-              i < 4 ? "lg:border-t-0" : ""
-            } ${i < 2 ? "sm:border-t-0" : ""}`}
-          />
-        ))}
-      </div>
-    </>
+    </div>
   );
 }

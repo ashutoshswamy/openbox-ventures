@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { CTA } from "@/components/CTA";
 import { ServicesBento } from "@/components/ServicesBento";
 
 export const metadata: Metadata = {
@@ -12,8 +11,6 @@ export default function ServicesPage() {
   return (
     <>
       <ServicesBento />
-
-      <CTA />
     </>
   );
 }

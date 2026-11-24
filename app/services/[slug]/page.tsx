@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Check } from "lucide-react";
-import { PageHeader } from "@/components/PageHeader";
-import { CTA } from "@/components/CTA";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { ScrollHeadline } from "@/components/ScrollHeadline";
+import { ArrowDownRight } from "lucide-react";
+import { serviceIcons } from "@/components/Bento";
 import { company, services } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -29,6 +25,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
+  const index = services.findIndex((x) => x.slug === service.slug);
+  const Icon = serviceIcons[service.icon];
   const others = services.filter((s) => s.slug !== service.slug);
 
   const url = `${company.url}/services/${slug}`;
@@ -64,62 +62,51 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-      <PageHeader title={service.name} intro={service.tagline} />
-
-      <section className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-20">
-          <ScrollReveal>
-            <p className="text-body-lg text-paper/80">{service.summary}</p>
-            <p className="mt-8 border-l-2 border-accent pl-5 font-display text-display-md leading-[1.1]">
-              {service.outcome}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            {/* swap the image in lib/data.ts; any 4:3 image fits the frame */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden">
-              <Image
-                src={service.image}
-                alt={`${service.name} at Open Box Ventures LLP`}
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-contain p-4"
-              />
-            </div>
-          </ScrollReveal>
+      {/* hairline bento, same language as the Services index */}
+      <div className="grid grid-cols-1 border-t border-line [&>*]:border-b [&>*]:border-r [&>*]:border-line sm:grid-cols-2 lg:grid-cols-[repeat(24,minmax(0,1fr))]">
+        <div className="flex min-h-72 items-center justify-center bg-ink px-8 py-12 sm:col-span-2 lg:col-span-8 lg:min-h-[420px]">
+          <Icon className="h-32 w-32 text-accent md:h-40 md:w-40" strokeWidth={1} aria-hidden />
+        </div>
+        <div className="flex min-h-72 flex-col justify-center bg-ink px-8 py-12 sm:col-span-2 lg:col-span-16 lg:min-h-[420px] lg:px-14">
+          <p className="text-body-sm text-paper/70">Service {String(index + 1).padStart(2, "0")}</p>
+          <h1 className="mt-3 font-display text-[clamp(34px,5vw,72px)] font-semibold leading-[1.05]">{service.name}</h1>
+          <p className="mt-5 max-w-2xl text-body-lg text-paper/75">{service.tagline}</p>
         </div>
 
-        <div className="mt-24">
-          <h2 className="font-display text-display-md">What&apos;s included</h2>
-          <ul className="mt-8 grid grid-cols-1 gap-x-12 gap-y-5 sm:grid-cols-2">
-            {service.offerings.map((o) => (
-              <li key={o} className="flex items-start gap-3 text-body-lg text-paper/85">
-                <Check className="mt-1.5 h-5 w-5 shrink-0 text-accent" strokeWidth={2} />
-                {o}
-              </li>
-            ))}
-          </ul>
+        <div className="bg-ink px-8 py-12 sm:col-span-2 lg:col-span-12 lg:px-14 lg:py-16">
+          <p className="text-body-sm uppercase tracking-[0.14em] text-accent">What we do</p>
+          <p className="mt-5 text-body-lg text-paper/85">{service.summary}</p>
         </div>
-      </section>
+        <div className="bg-ink px-8 py-12 sm:col-span-2 lg:col-span-12 lg:px-14 lg:py-16">
+          <p className="text-body-sm uppercase tracking-[0.14em] text-accent">The outcome</p>
+          <p className="mt-5 font-display text-[clamp(24px,2.6vw,38px)] leading-[1.15]">{service.outcome}</p>
+        </div>
 
-      <section className="on-paper px-6 py-24 md:px-10 md:py-28">
-        <div className="mx-auto max-w-7xl">
-          <ScrollHeadline className="font-display text-display-lg leading-[0.98]">Other services</ScrollHeadline>
-          <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {others.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/services/${s.slug}`}
-                className="flex items-start justify-between gap-3 border border-ink/30 p-5 text-body-base font-semibold transition-colors hover:bg-ink hover:text-paper"
-              >
-                {s.name}
-                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />
-              </Link>
-            ))}
+        {service.offerings.map((o, i) => (
+          <div key={o} className="flex min-h-48 flex-col justify-between gap-8 bg-ink px-8 py-8 lg:col-span-8">
+            <span className="font-display text-body-sm tracking-[0.18em] text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <p className="font-display text-[clamp(20px,1.9vw,28px)] leading-[1.2]">{o}</p>
           </div>
-        </div>
-      </section>
+        ))}
 
-      <CTA headline={`Have a ${service.name.toLowerCase()} brief?`} />
+        {others.map((s) => {
+          const OtherIcon = serviceIcons[s.icon];
+          return (
+            <Link
+              key={s.slug}
+              href={`/services/${s.slug}`}
+              className="group flex min-h-40 items-center gap-4 bg-ink px-6 py-8 transition-colors hover:bg-[#140f2a] lg:col-span-6"
+            >
+              <OtherIcon className="h-10 w-10 shrink-0 text-accent" strokeWidth={1.25} aria-hidden />
+              <span className="min-w-0 font-display text-body-lg font-semibold leading-tight">{s.name}</span>
+              <ArrowDownRight className="ml-auto h-5 w-5 shrink-0 text-accent transition-transform group-hover:translate-x-1 group-hover:translate-y-1" strokeWidth={2.5} />
+            </Link>
+          );
+        })}
+        <Link href="/contact" className="flex min-h-40 items-center justify-center bg-accent px-6 py-8 font-display text-body-lg font-semibold text-ink transition-colors hover:bg-accent-2 sm:col-span-2 lg:col-span-6">
+          Start a brief
+        </Link>
+      </div>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SocialIcon } from "react-social-icons";
 import { services, company, socials } from "@/lib/data";
 import { Offices } from "./Offices";
 import { FooterWordmark } from "./FooterWordmark";
@@ -21,13 +22,21 @@ const link = "transition-colors hover:text-accent";
  */
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-ink px-6 pt-20 md:px-10 md:pt-28">
-      <div className="mx-auto max-w-7xl">
+    <footer className="relative overflow-hidden border-t border-line bg-ink px-6 pt-20 md:px-10 md:pt-28">
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_0%_100%,rgba(34,211,238,0.4),rgba(91,47,176,0.2)_45%,transparent_75%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px)] [background-size:calc(100%/12)_100%]"
+      />
+      <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
-          <p className="text-body-sm font-medium text-accent">Have a brief?</p>
+          <p className="font-serif text-[clamp(32px,4vw,60px)] italic leading-none text-paper">Have a brief?</p>
           <a
             href={`mailto:${company.email}`}
-            className="mx-auto mt-6 block w-fit max-w-full rounded-full border-2 border-paper/80 px-[0.7em] py-[0.18em] font-display text-[clamp(20px,4.6vw,72px)] leading-[1.05] transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-ink"
+            className="mx-auto mt-8 block w-fit max-w-full border border-paper/30 bg-paper/5 px-[0.7em] py-[0.25em] font-display text-[clamp(20px,4.2vw,64px)] font-semibold leading-[1.05] backdrop-blur transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-ink"
           >
             {company.email}
           </a>
@@ -73,11 +82,17 @@ export function Footer() {
 
             <div>
               <p className={colTitle}>Follow</p>
-              <ul className="mt-4 space-y-2.5 text-body-sm text-paper/75">
+              <ul className="mt-4 flex gap-3">
                 {socials.map((s) => (
                   <li key={s.network}>
-                    <a href={s.url} target="_blank" rel="noopener noreferrer" className={`capitalize ${link}`}>
-                      {s.network === "x" ? "X" : s.network}
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.network === "x" ? "X" : s.network}
+                      className="flex h-11 w-11 items-center justify-center border border-paper/20 transition-colors hover:border-accent hover:bg-accent/15"
+                    >
+                      <SocialIcon as="span" network={s.network} bgColor="transparent" fgColor="#fff" style={{ height: 24, width: 24 }} />
                     </a>
                   </li>
                 ))}

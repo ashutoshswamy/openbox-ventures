@@ -3,108 +3,117 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
-import { ScrollHeadline } from "./ScrollHeadline";
-import { Silk } from "./Silk";
+import { gsap, withReducedMotion } from "@/lib/gsap";
 import { processSteps } from "@/lib/data";
 
 // same order as `processSteps`
 const images = ["discover", "plan", "execute", "deliver", "support"];
-
-// one silk preset per step, rotating through the family so no two neighbours match
-const silks = ["plum", "ember", "indigo", "dusk", "deep"] as const;
+const STEP = 26; // degrees between steps on the wheel
+const n = processSteps.length;
 
 /**
- * Horizontal pan: on desktop the section pins and the five steps travel sideways as you scroll, so the
- * process reads as a journey with a start and an end. Below lg (or with reduced motion) it is a plain vertical list.
+ * "How we work": a dial. The five steps sit on a big ring whose centre is off the left edge; scrolling turns the ring
+ * so the next step rolls up to the pointer while its detail swaps in on the right. Labels counter-rotate to stay upright.
+ * Below md the ring is hidden and only the detail scenes crossfade. Reduced motion: first step only.
  */
 export function Process() {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-        const track = root.current!.querySelector<HTMLElement>(".proc-track")!;
-        const distance = () => track.scrollWidth - window.innerWidth;
-        const pan = gsap.to(track, {
-          x: () => -distance(),
-          ease: "none", // required for a 1:1 scroll-to-position map
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top top",
-            end: () => `+=${distance()}`,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true,
-            anticipatePin: 1,
-          },
-        });
-        gsap.to(".proc-line", {
-          scaleX: 1,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top top", end: () => `+=${distance()}`, scrub: true },
-        });
-        // each cut-out slides against its panel while the panel crosses the viewport
-        gsap.utils.toArray<HTMLElement>(".proc-art").forEach((art) => {
-          gsap.fromTo(
-            art,
-            { xPercent: -14 },
-            {
-              xPercent: 14,
-              ease: "none",
-              scrollTrigger: {
-                trigger: art.closest(".proc-panel"),
-                containerAnimation: pan,
-                start: "left right",
-                end: "right left",
-                scrub: true,
-              },
-            },
-          );
-        });
-      });
+      const q = gsap.utils.selector(root);
+      withReducedMotion(
+        () => {
+          const details = q(".pw-detail");
+          const labels = q(".pw-label");
+          const wheel = q(".pw-wheel")[0];
+          gsap.set(details, { opacity: 0 });
+          gsap.set(details[0], { opacity: 1 });
+          gsap.set(labels, { transformOrigin: "6px 50%", rotation: (j) => -j * STEP, opacity: (j) => (j ? 0.3 : 1) });
+          const tl = gsap.timeline({
+            defaults: { ease: "power2.inOut" },
+            scrollTrigger: { trigger: root.current, start: "top top", end: `+=${n * 90}%`, scrub: 0.6, pin: true },
+          });
+          for (let i = 1; i < n; i++) {
+            const t = i - 1;
+            tl.to(wheel, { rotation: -i * STEP, duration: 0.9 }, t + 0.1)
+              .to(labels, { rotation: (j) => (i - j) * STEP, opacity: (j) => (j === i ? 1 : 0.3), duration: 0.9 }, t + 0.1)
+              .to(details[i - 1], { opacity: 0, y: -40, duration: 0.35 }, t + 0.1)
+              .fromTo(details[i], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4 }, t + 0.55);
+          }
+          tl.to({}, { duration: 0.4 });
+          tl.to(q(".pw-line"), { scaleX: 1, ease: "none", duration: tl.duration() }, 0);
+        },
+        () => {
+          gsap.set(q(".pw-detail"), { opacity: 0 });
+          gsap.set(q(".pw-detail")[0], { opacity: 1 });
+        },
+      );
     },
     { scope: root },
   );
 
   return (
-    <section ref={root} className="border-t border-line lg:h-svh lg:overflow-hidden">
-      <div className="flex flex-col justify-center gap-10 px-6 py-24 md:px-10 lg:h-full lg:gap-12 lg:py-0 lg:pb-24">
-        <div className="mx-auto w-full max-w-7xl">
-          <ScrollHeadline className="max-w-2xl font-display text-display-lg leading-[0.98]">How we work</ScrollHeadline>
-          <div aria-hidden className="mt-8 hidden h-0.5 bg-paper/10 lg:block">
-            <div className="proc-line h-full origin-left scale-x-0 bg-accent" />
-          </div>
-        </div>
+    <section ref={root} className="relative h-svh overflow-hidden border-t border-line bg-ink [--R:clamp(240px,40vh,420px)]">
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_60%_90%_at_0%_50%,rgba(34,211,238,0.45),rgba(91,47,176,0.25)_45%,transparent_75%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px)] [background-size:calc(100%/12)_100%]"
+      />
+      <h2 className="absolute inset-x-0 top-24 z-20 text-center font-display text-body-sm font-semibold uppercase tracking-[0.18em] text-paper/60 md:top-32">
+        How we work
+      </h2>
 
-        <ol className="proc-track flex flex-col gap-5 lg:w-max lg:flex-row lg:gap-6 lg:pl-[max(2.5rem,calc((100vw-80rem)/2))] lg:pr-24">
-          {processSteps.map((s, i) => (
-            <li
-              key={s.title}
-              className="proc-panel relative grid overflow-hidden border border-line lg:min-h-[50svh] lg:w-[min(64vw,860px)] lg:grid-cols-[1.05fr_0.95fr]"
-            >
-              <Silk name={silks[i]} />
-              <div aria-hidden className="pointer-events-none absolute inset-0 bg-ink/35" />
-              <div className="relative z-10 flex flex-col justify-end gap-4 p-7 md:p-10">
-                <h3 className="font-display text-[clamp(44px,6.4vw,104px)] leading-[0.95] text-paper">{s.title}</h3>
-                <p className="max-w-xs text-body-lg text-paper/75">{s.body}</p>
+      {/* dial: origin sits on the left edge, mid-height */}
+      <div aria-hidden className="absolute left-0 top-1/2 z-10 hidden md:block">
+        <div className="absolute left-0 top-0 h-[calc(var(--R)*2)] w-[calc(var(--R)*2)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-paper/15" />
+        <div className="absolute left-0 top-0 h-[calc(var(--R)*2+120px)] w-[calc(var(--R)*2+120px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-paper/5" />
+        <div className="pw-wheel absolute left-0 top-0 h-0 w-0">
+          {processSteps.map((s, j) => (
+            <div key={s.title} className="absolute left-0 top-0 h-0 w-0" style={{ transform: `rotate(${j * STEP}deg) translateX(var(--R))` }}>
+              <div className="pw-label absolute -left-1.5 top-0 flex -translate-y-1/2 items-center gap-4 whitespace-nowrap">
+                <span className="h-3 w-3 shrink-0 rounded-full bg-accent shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
+                <span className="font-display text-[clamp(22px,2.6vw,40px)] font-semibold leading-none">
+                  <span className="mr-3 text-body-sm tracking-[0.18em] text-accent">0{j + 1}</span>
+                  {s.title}
+                </span>
               </div>
-              <div className="relative z-10 min-h-56 overflow-hidden lg:min-h-0">
-                <div className="proc-art absolute inset-3 md:inset-6">
-                  <Image
-                    src={`/howwework/${images[i]}.png`}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 30vw, 90vw"
-                    data-fx="off"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
+        {/* pointer at 0deg */}
+        <span className="absolute top-0 h-px w-10 -translate-y-1/2 bg-accent" style={{ left: "calc(var(--R) - 48px)" }} />
+      </div>
+
+      {processSteps.map((s, i) => (
+        <div
+          key={s.title}
+          style={i ? { opacity: 0 } : undefined}
+          className="pw-detail absolute inset-0 z-10 flex flex-col items-center px-6 pt-[16vh] text-center md:items-start md:justify-center md:pl-[54%] md:pr-10 md:pt-0 md:text-left"
+        >
+          <div className="relative bg-[radial-gradient(closest-side,rgba(34,211,238,0.4),transparent)] h-[24vh] w-[min(70vw,360px)] md:h-[30vh] md:w-[min(30vw,420px)]">
+            <Image
+              src={`/howwework/${images[i]}.png`}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 30vw, 70vw"
+              data-fx="off"
+              className="object-contain object-center md:object-left"
+            />
+          </div>
+          <p className="mt-6 font-display text-body-sm tracking-[0.18em] text-accent">
+            0{i + 1} / 0{n}
+          </p>
+          <h3 className="mt-3 font-display text-[clamp(32px,4.4vw,68px)] font-semibold leading-[1.05]">{s.title}</h3>
+          <p className="mt-5 max-w-md text-body-lg text-paper/80">{s.body}</p>
+        </div>
+      ))}
+
+      <div aria-hidden className="absolute inset-x-6 bottom-8 z-20 h-px bg-paper/10 md:inset-x-10">
+        <div className="pw-line h-full origin-left scale-x-0 bg-accent" />
       </div>
     </section>
   );

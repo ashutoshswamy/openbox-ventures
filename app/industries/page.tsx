@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
-import { CTA } from "@/components/CTA";
 import { IndustriesBento } from "@/components/IndustriesBento";
 
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "What each of Open Box Ventures LLP's service lines delivers: logistics & supply chain, marketing & branding, event management, IT & digital, e-commerce development, content creation, photography & videography, and advertising.",
+    "The industries Open Box Ventures LLP serves: transportation, consumer brands & retail, hospitality & events, technology, direct-to-consumer, media, fashion, and entertainment.",
 };
 
 export default function IndustriesPage() {
   return (
     <>
-      <section className="relative flex min-h-svh flex-col">
-        <h1 className="sr-only">Industries Open Box Ventures LLP serves</h1>
-        <IndustriesBento />
-      </section>
-
-      <CTA headline="Don't see your industry?" body="Tell us what you're building. The disciplines flex to fit the brief, not the other way around." />
+      <IndustriesBento />
     </>
   );
 }

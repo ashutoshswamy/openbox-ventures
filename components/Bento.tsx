@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Camera, CalendarDays, Megaphone, MonitorSmartphone, PenLine, Radio, ShoppingCart, Truck, type LucideIcon } from "lucide-react";
+
+/** Icon per `icon` name in lib/data.ts services. */
+export const serviceIcons: Record<string, LucideIcon> = { Truck, Megaphone, CalendarDays, MonitorSmartphone, ShoppingCart, PenLine, Camera, Radio };
 
 /** Shared bits for the Services/Industries bento modules: illustrations, the
  * prompt cell, and the display-font style for cell titles. */

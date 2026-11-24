@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { DUR, EASE } from "@/lib/motion-tokens";
 import { ScrollReveal } from "./ScrollReveal";
-import { ScrollHeadline } from "./ScrollHeadline";
+import { Backdrop } from "./Backdrop";
 import { useMagnetic } from "@/lib/useMagnetic";
-import { Button, ButtonLink } from "./Button";
-import { ArrowDown, Check, Mail, MapPin, Phone } from "lucide-react";
+import { sharp } from "./Button";
+import { Check, Mail, MapPin, Phone } from "lucide-react";
 import { company, services } from "@/lib/data";
 
 const fieldLabelClass = "text-body-sm font-medium";
@@ -33,92 +32,57 @@ export function ContactSection() {
   };
 
   return (
-    <>
-      <section id="contact" className="relative flex min-h-svh items-center overflow-hidden px-6 pb-16 pt-32 md:px-10">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative z-10">
-            <ScrollHeadline as="h1" className="font-display text-[clamp(44px,6vw,88px)] leading-[0.96]">
-              Bring us the brief.
-            </ScrollHeadline>
-            <ScrollReveal delay={0.05}>
-              <p className="mt-6 max-w-md text-body-lg text-paper/70">
-                Tell us what you&apos;re trying to do. We&apos;ll come back with how we&apos;d do it - and who&apos;d run it.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <ButtonLink href="#brief">
-                  Send a brief
-                  <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
-                </ButtonLink>
-                <ButtonLink href={`mailto:${company.email}`} variant="outline">
-                  {company.email}
-                </ButtonLink>
-              </div>
-            </ScrollReveal>
-          </div>
-
+    <section id="contact" className="relative overflow-hidden bg-ink px-6 pb-24 pt-40 md:px-10 md:pt-44">
+      <Backdrop at="0% 90%" />
+      <div className="relative mx-auto grid w-full max-w-7xl gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div>
+          <h1 className="font-display text-[clamp(44px,6.5vw,96px)] font-semibold leading-[1.05]">
+            <span className="block">Bring us</span>
+            <span className="block font-serif font-normal italic">the brief.</span>
+          </h1>
+          <ScrollReveal delay={0.05}>
+            <p className="mt-6 max-w-md text-body-lg text-paper/80">
+              Tell us what you&apos;re trying to do. We&apos;ll come back with how we&apos;d do it - and who&apos;d run it. Takes a minute; we reply within one business day.
+            </p>
+          </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src="/contact.png"
-                alt="A project brief form connected to offices in India, USA, Canada and the UAE"
-                fill
-                priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-contain"
-              />
-            </div>
+            <dl className="mt-12 grid gap-px bg-line">
+              {[
+                { icon: Mail, label: "Email", value: company.email, href: `mailto:${company.email}` },
+                { icon: Phone, label: "Phone", value: company.phone, href: `tel:${company.phone.replace(/\s/g, "")}` },
+                { icon: MapPin, label: "Headquarters", value: "Mohali, Punjab, India" },
+              ].map(({ icon: Icon, label, value, href }) => (
+                <div key={label} className="flex items-center gap-4 bg-ink/90 px-5 py-5 backdrop-blur">
+                  <Icon className="h-5 w-5 shrink-0 text-accent" strokeWidth={1.5} />
+                  <div className="min-w-0">
+                    <dt className={`${fieldLabelClass} text-paper/45`}>{label}</dt>
+                    <dd className="mt-1 break-words text-body-base text-paper">
+                      {href ? (
+                        <a href={href} className="transition-colors hover:text-accent">
+                          {value}
+                        </a>
+                      ) : (
+                        value
+                      )}
+                    </dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
           </ScrollReveal>
         </div>
-      </section>
 
-      <section id="brief" className="border-t border-line px-6 py-24 md:px-10 md:py-32">
-        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-          <div>
-            <ScrollHeadline className="font-display text-display-lg leading-[1.05]">Project brief</ScrollHeadline>
-            <ScrollReveal delay={0.05}>
-              <p className="mt-4 max-w-sm text-body-base text-paper/60">
-                Takes a minute. We reply within one business day.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <dl className="mt-12 divide-y divide-line border-y border-line">
-                {[
-                  { icon: Mail, label: "Email", value: company.email, href: `mailto:${company.email}` },
-                  { icon: Phone, label: "Phone", value: company.phone, href: `tel:${company.phone.replace(/\s/g, "")}` },
-                  { icon: MapPin, label: "Headquarters", value: "Mohali, Punjab, India" },
-                ].map(({ icon: Icon, label, value, href }) => (
-                  <div key={label} className="flex items-center gap-4 py-5">
-                    <Icon className="h-5 w-5 shrink-0 text-paper/60" strokeWidth={1.5} />
-                    <div className="min-w-0">
-                      <dt className={`${fieldLabelClass} text-paper/45`}>{label}</dt>
-                      <dd className="mt-1 break-words text-body-base text-paper">
-                        {href ? (
-                          <a href={href} className="transition-colors hover:text-paper/70">
-                            {value}
-                          </a>
-                        ) : (
-                          value
-                        )}
-                      </dd>
-                    </div>
-                  </div>
-                ))}
-              </dl>
-            </ScrollReveal>
-          </div>
-
-          <ScrollReveal delay={0.1}>
+        <ScrollReveal delay={0.1}>
+          <div id="brief" className="border border-paper/15 bg-paper/[0.04] p-6 backdrop-blur md:p-10">
             {sent ? (
-              <div className="flex min-h-96 flex-col items-center justify-center rounded-panel border border-line text-center">
-                <Check className="h-8 w-8 text-accent-2" strokeWidth={1.4} />
-                <p className="mt-6 font-display text-display-md">Thanks - we&apos;ll be in touch.</p>
+              <div className="flex min-h-96 flex-col items-center justify-center text-center">
+                <Check className="h-8 w-8 text-accent" strokeWidth={1.4} />
+                <p className="mt-6 font-display text-display-md font-semibold">Thanks - we&apos;ll be in touch.</p>
                 {/* form is not yet wired to a backend/CRM */}
                 <p className="mt-2 text-body-sm text-paper/60">We&apos;ll follow up within one business day.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-12">
+              <form onSubmit={handleSubmit} className="space-y-10">
                 <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
                   <Field label="Name" name="name" autoComplete="name" required />
                   <Field label="Company" name="company" autoComplete="organization" hint="Optional" />
@@ -126,11 +90,11 @@ export function ContactSection() {
                 <Field label="Email" name="email" type="email" autoComplete="email" required />
                 <fieldset>
                   <legend className="text-body-sm font-medium text-paper/70">What do you need? *</legend>
-                  <div className="mt-4 flex flex-wrap gap-3">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {[...services.map((s) => ({ value: s.slug, label: s.name })), { value: "multiple", label: "Not sure yet" }].map((o, i) => (
                       <label key={o.value} className="cursor-pointer">
                         <input type="radio" name="service-area" value={o.value} required={i === 0} className="peer sr-only" />
-                        <span className="inline-flex h-11 items-center rounded-full border border-paper/35 px-5 text-body-sm transition-colors hover:border-paper peer-checked:border-accent peer-checked:bg-accent peer-checked:text-ink peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
+                        <span className="inline-flex h-10 items-center border border-paper/25 px-4 text-body-sm transition-colors hover:border-paper peer-checked:border-accent peer-checked:bg-accent peer-checked:text-ink peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
                           {o.label}
                         </span>
                       </label>
@@ -138,15 +102,20 @@ export function ContactSection() {
                   </div>
                 </fieldset>
                 <Field label="The brief" name="message" textarea required hint="Goals, timeline, anything we should know." />
-                <Button ref={magneticBtn} type="submit" disabled={submitting} className="relative w-full overflow-hidden sm:w-auto sm:min-w-56">
+                <button
+                  ref={magneticBtn}
+                  type="submit"
+                  disabled={submitting}
+                  className={`${sharp.base} ${sharp.accent} relative w-full overflow-hidden sm:w-auto sm:min-w-56`}
+                >
                   <span ref={btnDefaultRef}>Send brief</span>
-                </Button>
+                </button>
               </form>
             )}
-          </ScrollReveal>
-        </div>
-      </section>
-    </>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
   );
 }
 

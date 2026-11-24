@@ -17,7 +17,7 @@ export function FooterWordmark({ text }: { text: string }) {
       if (!el) return;
       withReducedMotion(
         () => {
-          const split = SplitText.create(el, { type: "chars", mask: "chars" });
+          const split = SplitText.create(el, { type: "lines,chars", mask: "lines" });
           gsap.set(el, { opacity: 1 });
           gsap.from(split.chars, {
             yPercent: 105,
@@ -29,8 +29,8 @@ export function FooterWordmark({ text }: { text: string }) {
           const cleanups: Array<() => void> = [];
           if (!window.matchMedia("(hover: none)").matches) {
             split.chars.forEach((ch) => {
-              const enter = () => gsap.to(ch, { y: -14, color: "#67abc1", duration: 0.25, ease: "power2.out", overwrite: "auto" });
-              const leave = () => gsap.to(ch, { y: 0, color: "#d1dbde", duration: 0.7, ease: "elastic.out(1,0.5)", overwrite: "auto" });
+              const enter = () => gsap.to(ch, { y: -14, color: "#22d3ee", duration: 0.25, ease: "power2.out", overwrite: "auto" });
+              const leave = () => gsap.to(ch, { y: 0, color: "#e4e6ff", duration: 0.7, ease: "elastic.out(1,0.5)", overwrite: "auto" });
               ch.addEventListener("pointerenter", enter);
               ch.addEventListener("pointerleave", leave);
               cleanups.push(() => {

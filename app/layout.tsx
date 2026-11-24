@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Syne, Geist } from "next/font/google";
+import { Syne, Geist, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
+import { HideOnHome } from "@/components/HideOnHome";
 import { BottomNav } from "@/components/BottomNav";
+import { PageTransition } from "@/components/PageTransition";
 import { PageFx } from "@/components/PageFx";
 import { MotionProvider } from "@/components/MotionProvider";
 import { company, offices, services, socials } from "@/lib/data";
@@ -11,6 +13,13 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const serif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
 });
 
 const geist = Geist({
@@ -107,7 +116,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${syne.variable} ${geist.variable} h-full antialiased`}
+      className={`${syne.variable} ${geist.variable} ${serif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-ink text-paper">
         <script
@@ -120,9 +129,12 @@ export default function RootLayout({
         </noscript>
         <MotionProvider>
           <main className="flex-1">{children}</main>
-          <Footer />
+          <HideOnHome>
+            <Footer />
+          </HideOnHome>
           <BottomNav />
           <PageFx />
+          <PageTransition />
         </MotionProvider>
       </body>
     </html>

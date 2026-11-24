@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHeader } from "@/components/PageHeader";
-import { CTA } from "@/components/CTA";
 import { ScrollReveal, StaggerGroup, StaggerChild } from "@/components/ScrollReveal";
 import { company, founders, members } from "@/lib/data";
 
@@ -76,8 +75,6 @@ export default function TeamPage() {
           )}
         </div>
       </section>
-
-      <CTA headline="Talk to the people who run it." />
     </>
   );
 }
